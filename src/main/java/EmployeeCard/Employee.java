@@ -13,7 +13,7 @@ public class Employee {
     String description;
     List<String> characteristics;
     Post post;
-    Long id;
+   // Long id;
 
     final String PATH ="C:\\Users\\nikit\\Desktop\\info.txt";
     public Employee(){}
@@ -21,4 +21,6 @@ public class Employee {
         this.firstName=person.getNameFromFile(PATH);
         this.lastName=person.getLastNameFromFile(PATH);
     }
+
+
 }
