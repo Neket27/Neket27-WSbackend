@@ -5,10 +5,9 @@ import lombok.Data;
 import java.util.UUID;
 
 
-
-public class Post extends Employee {
+@Data
+public class Post  {
     UUID id;
-    Long countPosts = Long.valueOf(0);
     String name;
 
     public  Post(){}
@@ -21,5 +20,8 @@ public class Post extends Employee {
     }
 
 
-
+    public Post(UUID id, String name) {
+        this.id=id;
+        this.name=name;
+    }
 }
