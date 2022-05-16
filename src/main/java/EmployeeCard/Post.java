@@ -1,7 +1,6 @@
 package EmployeeCard;
 
 import lombok.Data;
-
 import java.util.UUID;
 
 
@@ -11,14 +10,6 @@ public class Post  {
     String name;
 
     public  Post(){}
-    public Post(Employee employee) {
-        this.name=employee.getFirstName();
-    }
-
-    public Post(String firstName) {
-        this.name=firstName;
-    }
-
 
     public Post(UUID id, String name) {
         this.id=id;

@@ -1,7 +1,6 @@
 package EmployeeCard;
-import lombok.Data;
 
-import java.io.IOException;
+import lombok.Data;
 import java.util.List;
 
 @Data
@@ -11,9 +10,8 @@ public class Employee  {
     String description;
     List<String> characteristics;
     Post post;
-   // Long id;
 
-    final String PATH ="C:\\Users\\nikit\\Desktop\\info.txt";
+
     public Employee(){}
 
 
