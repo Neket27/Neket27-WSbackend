@@ -23,9 +23,8 @@ public class MainApp {
     public static void main(String[] args) throws IOException {
         PrintStream p = System.out;
         Scanner enter = new Scanner(System.in);
-//        p.println("Enter path to file: ");
-        PATH="C:\\Users\\nikit\\Desktop\\info.txt";
-//        PATH= enter.nextLine();
+        p.println("Enter path to file: ");
+        PATH= enter.nextLine();
 
 
         readFromFile();
@@ -40,11 +39,9 @@ public class MainApp {
                     p.println(employee.getPost().getName());
                     p.print("Description: ");
                     p.println(employee.getDescription());
-                    p.print("Characteristics: ");
+                    p.print("Characteristics:");
                     employee.getCharacteristics().forEach(characteristic-> p.print(characteristic+" "));
                     p.println(" ");p.println(" ");
-
-
 
                 });
 
@@ -89,7 +86,6 @@ public class MainApp {
         streamBlockPeson.forEach(
                 (line) -> {
                     Optional<String> optStringLine = Optional.ofNullable(getBlockEmployeeFromFile(line));
-//                        System.out.println("OPT= "+optStringLine.isPresent());
                     if (optStringLine.isPresent()) {
 
                         if (getNameFromFile(line) != null) {
@@ -105,6 +101,7 @@ public class MainApp {
                         }
                         if (flagDescription == true && getCharacteristicsFromFile(line) == null) {
                             line = line.replace("description: ", "");
+                            line = line.replace("description:", "");
                             description.add(line);
                         } else {
                             flagDescription = false;
@@ -129,7 +126,6 @@ public class MainApp {
                             Post post = new Post(id,name);
                             post.setId(id);
                             posts.put(id, post);
-//                            System.out.println("namePost= "+name);
                             person.setPost(post);
                         }
 
@@ -138,10 +134,9 @@ public class MainApp {
                         List<String> allCharacteristics = new ArrayList<>();
                         characteristics.forEach(value -> allCharacteristics.add(value));
 
-//                        System.out.println("all= "+allCharacteristics);
                         if (!allCharacteristics.isEmpty())
-                            //  System.out.println("allEmpty= "+!allCharacteristics.isEmpty());
                             Collections.sort(allCharacteristics);
+
                         employees.get(Math.toIntExact(indexEmployee)).setCharacteristics(allCharacteristics);
 
                     } else {
