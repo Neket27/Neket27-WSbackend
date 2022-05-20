@@ -1,8 +1,8 @@
 package EmployeeCard;
 
+import lombok.Builder;
 import lombok.Data;
 import java.util.List;
-
 @Data
 public class Employee  {
     String firstName;
@@ -11,9 +11,7 @@ public class Employee  {
     List<String> characteristics;
     Post post;
 
-
     public Employee(){}
-
-
-
 }
+
+
