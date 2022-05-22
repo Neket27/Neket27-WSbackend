@@ -1,16 +1,15 @@
-package EmployeeCard;
+package Dto;
 
 import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class Post  {
+public class CreatePostDto {
     private UUID id;
     private String name;
 
-    public Post(UUID id, String name) {
+    public CreatePostDto(UUID id, String name) {
         this.id=id;
         this.name=name;
     }
-
 }

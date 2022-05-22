@@ -1,17 +1,25 @@
 package EmployeeCard;
-
-import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+import java.util.ArrayList;
 import java.util.List;
+
+@RequiredArgsConstructor
 @Data
 public class Employee  {
-    String firstName;
-    String lastName;
-    String description;
-    List<String> characteristics;
-    Post post;
+    private String firstName;
+    private String lastName;
+    private String description;
+    private List<String> characteristics= new ArrayList<>();
+    private Post post;
 
-    public Employee(){}
+    public Employee(String firstName, String lastName, String description, List<String> characteristics,Post post) {
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.description=description;
+        characteristics.forEach(characteristic->this.characteristics.add(characteristic));
+        this.post=post;
+    }
 }
 
 
