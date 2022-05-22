@@ -1,15 +1,9 @@
 package Model;
 
 import EmployeeCard.Employee;
-import EmployeeCard.Post;
-import Service.EmployeeCardService;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.in;
 import static org.mockito.Mockito.*;
 
 class InMemoryEmployeeCardServiceTest {
