@@ -1,6 +1,6 @@
-import EmployeeCard.Employee;
-import Model.InMemoryEmployeeCardService;
-import Model.InMemoryPostService;
+import employeeCard.Employee;
+import model.InMemoryEmployeeCardService;
+import model.InMemoryPostService;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -24,60 +24,46 @@ public class MainApp {
         final String PATH=args[0];
         if (PATH.isEmpty())
             throw new Exception("No PATH");
-        inMemoryPostService.cretePost();
+        inMemoryPostService.createPost();
         readEmployeesFromFile(PATH);
-        print(inMemoryEmployeeCardService.getEmployees());
-
+        new InMemoryEmployeeCardService().print(inMemoryEmployeeCardService.getEmployees());
     }
 
     public static void readEmployeesFromFile(String PATH) throws Exception {
         List<String> listEmployeesInfo = new ArrayList<>();
         Stream<String> streamInfoEmployees = Files.lines(Paths.get(PATH));
-        Stream<String> streamBlockPeson2 = Files.lines(Paths.get(PATH));
-        if(!(streamBlockPeson2.count()>0))
-            throw new Exception("The file is empty");
-
         streamInfoEmployees.forEach(employee->listEmployeesInfo.add(employee));
         List<String>listValueEmployee= new ArrayList<>();
         listEmployeesInfo.forEach(value->{
-            if(!value.isEmpty())
+            if(!value.isEmpty()) {
                 listValueEmployee.add(value);
+            }
             else {
                 String infoOneEmployee=String.join("", listValueEmployee);
                 listValueEmployee.clear();
-                try {inMemoryEmployeeCardService.getEmployees().add(dataEmploe(infoOneEmployee));}
+                try {inMemoryEmployeeCardService.add(dataEmployee(infoOneEmployee));}
                 catch (Exception e) {e.printStackTrace();}
             }
         });
+        if(listEmployeesInfo.isEmpty())
+            throw new Exception("The file is empty");
     }
 
-    private static Employee dataEmploe(String employee) throws Exception {
-        Matcher m = employeesFilePattern.matcher(employee);
+    private static Employee dataEmployee(String dataEmployee) throws Exception {
+        Matcher m = employeesFilePattern.matcher(dataEmployee);
         if(!m.find())
-            throw new Exception("Incorrect file: " + employee);
+            throw new Exception("File data is incorrect: " + dataEmployee);
 
-        Employee emoloyee=new Employee(
+        Employee employee=new Employee(
                 m.group("firstName"),
                 m.group("lastName"),
                 m.group("description"),
                 (Arrays.stream(m.group("characteristics").split(", ")).sorted()).collect(Collectors.toList()),
                 inMemoryPostService.getPosts().get(UUID.fromString(m.group("postId"))));
 
-        if ((emoloyee.getFirstName().isEmpty()) || (emoloyee.getLastName().isEmpty()) || emoloyee.getCharacteristics().isEmpty()||emoloyee.getPost()!=null )
+        if ((employee.getFirstName().isEmpty()) || (employee.getLastName().isEmpty()) ||employee.getCharacteristics().isEmpty()||employee.getPost()==null )
             throw new Exception("fill in the fields(the description may be empty)");
-        return emoloyee;
-    }
-
-    private static void print(List<Employee> employees) {
-        employees.sort(comparatorInFirstNameAndLastName());
-        employees.forEach(System.out::println);
-    }
-
-    public static Comparator<? super Employee> comparatorInFirstNameAndLastName() {
-        Comparator<Employee> employeeNameComparator
-                = Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getLastName);
-        Collections.sort(inMemoryEmployeeCardService.getEmployees(), employeeNameComparator);
-        return employeeNameComparator;
+        return employee;
     }
 
 }

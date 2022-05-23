@@ -1,10 +1,9 @@
-package Model;
+package model;
 
-import EmployeeCard.Employee;
-import EmployeeCard.Post;
+import employeeCard.Employee;
+import employeeCard.Post;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.UUID;
 
 public class InMemoryEmployeeCardServiceIntegrationTest {
@@ -28,6 +27,5 @@ public class InMemoryEmployeeCardServiceIntegrationTest {
         assertThat(employeeResult).isEqualTo(employee);
 
     }
-
 
 }

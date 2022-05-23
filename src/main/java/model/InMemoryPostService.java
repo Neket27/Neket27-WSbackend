@@ -1,8 +1,8 @@
-package Model;
+package model;
 
 
-import EmployeeCard.Post;
-import Service.PostService;
+import employeeCard.Post;
+import service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class InMemoryPostService implements PostService {
         return posts.put(uuid, new Post(uuid, name));
     }
     @Override
-    public void cretePost() {
+    public void createPost() {
         createPost(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "position at work_1");
         createPost(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0"), "position at work_2");
         createPost(UUID.fromString("606b99c0-b621-4f50-b0b6-58ed19ce6be1"), "position at work_3");

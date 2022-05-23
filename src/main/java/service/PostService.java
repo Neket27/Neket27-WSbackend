@@ -1,11 +1,11 @@
-package Service;
+package service;
 
-import EmployeeCard.Post;
+import employeeCard.Post;
 import java.util.UUID;
 
 public interface PostService {
 
-    void cretePost();
+    void createPost();
     Post createPost(UUID uuid, String name);
 
     }

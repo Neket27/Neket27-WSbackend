@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import EmployeeCard.Employee;
+import employeeCard.Employee;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.*;
@@ -18,15 +18,13 @@ class InMemoryEmployeeCardServiceTest {
     assertThat(employeeResult).isEqualTo(employee);
     }
 
-    @Test //не работает
+    @Test
     void getInFirstNameAndLastName() {
-        List<Employee>employees=mock(ArrayList.class);
+        InMemoryEmployeeCardService inMemoryEmployeeCardService =mock(InMemoryEmployeeCardService.class);
         Employee employee =mock(Employee.class);
-
-        when(employees.get(0)).thenReturn(employee);
-        InMemoryEmployeeCardService inMemoryEmployeeCardService =new InMemoryEmployeeCardService(employees);
+        when(inMemoryEmployeeCardService.get(eq("FistName"),eq("LastName"))).thenReturn(employee);
         Employee employeeResult = inMemoryEmployeeCardService.get("FistName","LastName");
-//        assertThat(employeeResult).isEqualTo(employee);
+        assertThat(employeeResult).isEqualTo(employee);
 
     }
 }

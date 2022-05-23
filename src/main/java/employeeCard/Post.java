@@ -1,4 +1,4 @@
-package EmployeeCard;
+package employeeCard;
 
 import lombok.Data;
 import java.util.UUID;
