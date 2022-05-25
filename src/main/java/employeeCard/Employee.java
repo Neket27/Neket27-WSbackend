@@ -17,7 +17,7 @@ public class Employee  {
         this.firstName=firstName;
         this.lastName=lastName;
         this.description=description;
-        characteristics.forEach(characteristic->this.characteristics.add(characteristic));
+        this.characteristics.addAll(characteristics);
         this.post=post;
     }
 }
