@@ -43,8 +43,11 @@ public class InMemoryEmployeeCardService implements EmployeeCardService {
     }
 
     @Override
-    public  void printSortedByFirstAndLastName(List<Employee> employees) {
+    public  void printSortedByFirstAndLastName() {
         employees.sort(comparatorInFirstNameAndLastName());
-        employees.forEach(System.out::println);
+        employees.forEach(employee -> {
+            System.out.println(employee);
+            System.out.println(" ");
+        });
     }
 }
