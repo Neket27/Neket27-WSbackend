@@ -4,14 +4,13 @@ import employeeCard.Post;
 import service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 @RequiredArgsConstructor
 public class InMemoryPostService implements PostService {
-    private Map<UUID, Post> posts = new HashMap<>();
+
+    private Map<UUID, Post> posts=new HashMap<>();
 
     @Override
     public Post createPost(UUID uuid, String name) {

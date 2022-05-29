@@ -1,4 +1,5 @@
 package employeeCard;
+import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
@@ -6,7 +7,8 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Data
-public class Employee  {
+@Builder
+public class Employee {
     private String firstName;
     private String lastName;
     private String description;

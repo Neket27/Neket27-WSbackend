@@ -10,4 +10,5 @@ public interface PostService {
     Post createPost(UUID uuid, String name);
 
     Post get(UUID id);
+
 }

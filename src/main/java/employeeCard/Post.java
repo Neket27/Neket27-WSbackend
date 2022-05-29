@@ -4,7 +4,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class Post  {
+public class Post {
     private UUID id;
     private String name;
 

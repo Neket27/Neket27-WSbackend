@@ -17,7 +17,8 @@ public interface EmployeeCardService {
 
     Comparator<? super Employee> comparatorInFirstNameAndLastName();
 
-    void printSortedByFirstAndLastName(List<Employee> employees);
+    void printSortedByFirstAndLastName();
 
+    void print();
 
 }

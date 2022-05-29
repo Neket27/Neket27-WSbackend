@@ -4,26 +4,24 @@ import employeeCard.Employee;
 import service.EmployeeCardService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+
 import java.util.*;
 
 @Data
 @RequiredArgsConstructor
 public class InMemoryEmployeeCardService implements EmployeeCardService {
-    private List<Employee> employees = new ArrayList<>();
 
-    public InMemoryEmployeeCardService(Employee employee) {
-        this.employees.add(employee);
-    }
+    private List<Employee> employees = new ArrayList<>();
 
     @Override
     public Employee get(UUID id) {
-        return employees.stream()
+        return this.employees.stream()
                 .filter(employee -> (employee.getPost().getId()).equals(id)).findFirst().get();
     }
 
     @Override
     public Employee get(String firstName, String lastName) {
-        return employees.stream()
+        return this.employees.stream()
                 .filter(employee -> (employee.getFirstName().equals(firstName)) && (employee.getLastName().equals(lastName))).findFirst().get();
     }
 
@@ -43,8 +41,20 @@ public class InMemoryEmployeeCardService implements EmployeeCardService {
     }
 
     @Override
-    public  void printSortedByFirstAndLastName(List<Employee> employees) {
-        employees.sort(comparatorInFirstNameAndLastName());
-        employees.forEach(System.out::println);
+    public void printSortedByFirstAndLastName() {
+        this.employees.sort(comparatorInFirstNameAndLastName());
+        this.employees.forEach(employee -> {
+            System.out.println(employee);
+            System.out.println(" ");
+        });
     }
+
+    @Override
+    public void print() {
+        this.employees.forEach(employee -> {
+            System.out.println(employee);
+            System.out.println(" ");
+        });
+    }
+
 }
