@@ -1,6 +1,8 @@
 package model;
 
 import employeeCard.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import service.EmployeeCardService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +11,11 @@ import java.util.*;
 
 @Data
 @RequiredArgsConstructor
+@Component
 public class InMemoryEmployeeCardService implements EmployeeCardService {
 
-    private List<Employee> employees = new ArrayList<>();
+    @Autowired
+    private List<Employee> employees;
 
     @Override
     public Employee get(UUID id) {

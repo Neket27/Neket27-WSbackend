@@ -8,8 +8,7 @@ import service.PostService;
 
 public class MainApp {
 
-    public MainApp() {
-    }
+    public MainApp() {}
 
     public static void main(String[] args) throws Exception {
         final String PATH = args[0];

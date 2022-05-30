@@ -1,6 +1,7 @@
 package model;
 
 import employeeCard.Post;
+import org.springframework.stereotype.Component;
 import service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import java.util.*;
 
 @Data
 @RequiredArgsConstructor
+@Component
 public class InMemoryPostService implements PostService {
 
     private Map<UUID, Post> posts=new HashMap<>();

@@ -1,10 +1,13 @@
 package service;
 
 import employeeCard.Employee;
+import org.springframework.stereotype.Service;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public interface EmployeeCardService {
 
     Employee get(UUID id);

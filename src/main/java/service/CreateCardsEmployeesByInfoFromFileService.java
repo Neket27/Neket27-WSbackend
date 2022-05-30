@@ -3,7 +3,9 @@ package service;
 import model.InMemoryEmployeeCardService;
 import model.InMemoryPostService;
 import org.json.simple.JSONArray;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface CreateCardsEmployeesByInfoFromFileService {
 
     void createPosts();

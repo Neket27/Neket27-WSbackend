@@ -7,6 +7,7 @@ import model.InMemoryPostService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.stereotype.Component;
 import service.EmployeeCardService;
 import service.CreateCardsEmployeesByInfoFromFileService;
 import service.PostService;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Data
 @RequiredArgsConstructor
+@Component
 public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesByInfoFromFileService {
 
     private final Pattern employeesFilePattern = Pattern.compile(
