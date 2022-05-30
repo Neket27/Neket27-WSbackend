@@ -1,4 +1,4 @@
-package model;
+package cardemployee.example.wsapp.model;
 
 import employeeCard.Employee;
 import org.junit.jupiter.api.Test;

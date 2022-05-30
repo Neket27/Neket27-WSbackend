@@ -1,15 +1,22 @@
-package model;
+package cardemployee.example.wsapp.model;
 
 import employeeCard.Employee;
 import employeeCard.Post;
+import model.InMemoryEmployeeCardService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.UUID;
 
+@SpringBootTest
 public class InMemoryEmployeeCardServiceIntegrationTest {
 
-    Employee employee = new Employee();
-    InMemoryEmployeeCardService employeeCardService = new InMemoryEmployeeCardService();
+    @Autowired
+    private Employee employee;
+    @Autowired
+    private InMemoryEmployeeCardService employeeCardService;
+
     @Test
     void getInId() {
         //Arrange

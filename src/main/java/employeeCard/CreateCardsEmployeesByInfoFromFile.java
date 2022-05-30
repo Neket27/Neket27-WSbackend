@@ -7,6 +7,7 @@ import model.InMemoryPostService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import service.EmployeeCardService;
 import service.CreateCardsEmployeesByInfoFromFileService;
@@ -32,7 +33,9 @@ public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesB
                     "characteristics: (?<characteristics>.+)" +
                     "postId: (?<postId>.+)");
 
+    @Autowired
     private PostService postService;
+    @Autowired
     private EmployeeCardService employeeCardService;
 
     public CreateCardsEmployeesByInfoFromFile(EmployeeCardService employeeCardService, PostService postService) {
