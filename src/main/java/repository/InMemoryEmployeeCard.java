@@ -5,7 +5,6 @@ import service.EmployeeCardService;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import java.util.*;
-
 @RequiredArgsConstructor
 @Component
 public class InMemoryEmployeeCard implements EmployeeCardService {

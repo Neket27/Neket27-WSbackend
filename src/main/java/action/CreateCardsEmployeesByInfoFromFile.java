@@ -1,7 +1,11 @@
 package action;
 
+import controller.EmployeeController;
+import controller.PostController;
 import model.Employee;
 import model.Post;
+import model.dtos.CreateEmployeeDto;
+import model.dtos.DtoEntity;
 import repository.InMemoryPost;
 import service.CreateCardsEmployeesByInfoFromFileService;
 import service.EmployeeCardService;
@@ -36,6 +40,9 @@ public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesB
 
     private final EmployeeCardService employeeCardService;
     private final PostService11 postService;
+    private final PostController postController;
+    private final EmployeeController employeeController;
+
 
 
     @Override
@@ -113,14 +120,15 @@ public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesB
         } catch (Exception e) {
             e.printStackTrace();
         }
-        jsonArray.forEach(employee -> employeeCardService.add(dataEmployee((JSONObject) employee)));
+        jsonArray.forEach(employee ->  employeeController.create(dataEmployee((JSONObject) employee)));
+//                employeeCardService.add(dataEmployee((JSONObject) employee)));
         return jsonArray;
     }
 
-    private Employee dataEmployee(JSONObject employee) {
+    private CreateEmployeeDto dataEmployee(JSONObject employee) {
         List<String> characteristics = new ArrayList<>((JSONArray) employee.get("characteristics"));
         Post post = postService.get(UUID.fromString((String) employee.get("postId")));
-        return Employee.builder()
+        return CreateEmployeeDto.builder()
                 .firstName(employee.get("firstName").toString())
                 .lastName(employee.get("lastName").toString())
                 .description(employee.get("description").toString())

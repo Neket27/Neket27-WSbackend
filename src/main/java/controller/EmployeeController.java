@@ -8,10 +8,10 @@ import service.EmployeeService;
 @RequiredArgsConstructor
 public class EmployeeController {
 
-    private final EmployeeService employeeServise;
+    private final EmployeeService employeeService;
 
     public DtoEntity create(CreateEmployeeDto createEmployeeDto) {
-        return employeeServise.createEmployee(createEmployeeDto);
+        return employeeService.createEmployee(createEmployeeDto);
 
     }
 

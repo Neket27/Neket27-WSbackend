@@ -7,6 +7,7 @@ import model.Employee;
 import model.Post;
 import model.dtos.CreateEmployeeDto;
 import model.dtos.CreatePostDto;
+import model.dtos.DtoEntity;
 import repository.InMemoryEmployeeCard;
 import repository.InMemoryPost;
 import service.*;
@@ -20,7 +21,8 @@ import java.util.UUID;
 
 @SpringBootApplication()
 @Import({Employee.class, Post.class, CreateCardsEmployeesByInfoFromFile.class,
-        InMemoryEmployeeCard.class, InMemoryPost.class})
+        InMemoryEmployeeCard.class, InMemoryPost.class,EmployeeService.class,
+        PostController.class,EmployeeController.class,PostService.class})
 
 public class WSappApplication {
 
@@ -28,7 +30,7 @@ public class WSappApplication {
         ConfigurableApplicationContext context = SpringApplication.run(WSappApplication.class, args);
 
 //        final String PATH = args[0];
-            String PATH="C:\\Users\\nikit\\Desktop\\java\\Backend\\Neket27-WSbackend\\src\\main\\resources\\Employees.json";
+        String PATH = "C:\\Users\\nikit\\Desktop\\java\\Backend\\Neket27-WSbackend\\src\\main\\resources\\Employees.json";
 
         if (PATH.isEmpty())
             throw new Exception("No PATH");
@@ -40,15 +42,17 @@ public class WSappApplication {
                 context.getBean(CreateCardsEmployeesByInfoFromFile.class);
 
         createCardsEmployeesByInfoFromFile.readEmployeesFromJson(PATH);
-        employeeCardService.print();
+
 ////////////////////////////////////////////////////////////////
+        EmployeeService employeeService=context.getBean(EmployeeService.class);
+        EmployeeController employeeController = new EmployeeController(employeeService);
+        DtoEntity createEmployeeDto=employeeController.create(new CreateEmployeeDto("1", "2", "3", "4", new ArrayList<>(), new Post()));
+        System.out.println(createEmployeeDto);
+        Post post = new Post(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "PostName");
+        PostController postController = new PostController(new PostService());
+        System.out.println(postController.createPost(new CreatePostDto(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "PostName")));
 
-        EmployeeController employeeController=new EmployeeController(new EmployeeService());
-        System.out.println(employeeController.create(new CreateEmployeeDto("1","2","3","4",new ArrayList<>(),new Post())));
-       Post post =new Post(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"),"PostName");
-       PostController postController =new PostController(new PostService());
-       System.out.println(postController.createPost(new CreatePostDto(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"),"PostName")));
-
+        employeeCardService.print();
     }
 
 }
