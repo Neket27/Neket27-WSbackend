@@ -1,4 +1,4 @@
-package cardemployee.example.wsapp;
+package cardemployee.wsapp;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

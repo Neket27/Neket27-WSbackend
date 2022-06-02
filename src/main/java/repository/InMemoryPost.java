@@ -1,8 +1,8 @@
-package model;
+package repository;
 
-import employeeCard.Post;
+import model.Post;
+import service.PostService11;
 import org.springframework.stereotype.Component;
-import service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import java.util.*;
@@ -10,9 +10,9 @@ import java.util.*;
 @Data
 @RequiredArgsConstructor
 @Component
-public class InMemoryPostService implements PostService {
+public class InMemoryPost implements PostService11 {
 
-    private Map<UUID, Post> posts=new HashMap<>();
+    private final Map<UUID, Post> posts;
 
     @Override
     public Post createPost(UUID uuid, String name) {

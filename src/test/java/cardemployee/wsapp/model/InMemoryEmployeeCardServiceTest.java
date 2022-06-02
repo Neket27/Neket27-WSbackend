@@ -1,6 +1,6 @@
-package cardemployee.example.wsapp.model;
+package cardemployee.wsapp.model;
 
-import employeeCard.Employee;
+import model.Employee;
 import org.junit.jupiter.api.Test;
 import service.EmployeeCardService;
 import java.util.*;

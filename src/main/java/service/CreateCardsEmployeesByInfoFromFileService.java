@@ -1,7 +1,7 @@
 package service;
 
-import model.InMemoryEmployeeCardService;
-import model.InMemoryPostService;
+import repository.InMemoryPost;
+import repository.InMemoryEmployeeCard;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,9 @@ public interface CreateCardsEmployeesByInfoFromFileService {
 
     void printSortedByFirstAndLastName();
 
-    InMemoryPostService getPosts();
+    InMemoryPost getPosts();
 
-    InMemoryEmployeeCardService getEmployees();
+    InMemoryEmployeeCard getEmployees();
 
 
 }

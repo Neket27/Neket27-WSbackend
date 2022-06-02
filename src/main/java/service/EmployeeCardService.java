@@ -1,6 +1,8 @@
 package service;
 
-import employeeCard.Employee;
+import model.Employee;
+import model.Post;
+import model.dtos.DtoEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;

@@ -1,20 +1,16 @@
-package model;
+package repository;
 
-import employeeCard.Employee;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import model.Employee;
 import service.EmployeeCardService;
-import lombok.Data;
+import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import java.util.*;
 
-@Data
 @RequiredArgsConstructor
 @Component
-public class InMemoryEmployeeCardService implements EmployeeCardService {
+public class InMemoryEmployeeCard implements EmployeeCardService {
 
-    @Autowired
-    private List<Employee> employees;
+    private final List<Employee> employees;
 
     @Override
     public Employee get(UUID id) {
@@ -45,8 +41,10 @@ public class InMemoryEmployeeCardService implements EmployeeCardService {
 
     @Override
     public void printSortedByFirstAndLastName() {
-        this.employees.sort(comparatorInFirstNameAndLastName());
-        this.employees.forEach(employee -> {
+        List<Employee> listEmployees=new ArrayList<>();
+        listEmployees.addAll(this.employees);
+        listEmployees.sort(comparatorInFirstNameAndLastName());
+        listEmployees.forEach(employee -> {
             System.out.println(employee);
             System.out.println(" ");
         });

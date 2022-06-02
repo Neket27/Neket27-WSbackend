@@ -1,17 +1,18 @@
-package employeeCard;
+package action;
 
+import model.Employee;
+import model.Post;
+import repository.InMemoryPost;
+import service.CreateCardsEmployeesByInfoFromFileService;
+import service.EmployeeCardService;
+import service.PostService11;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import model.InMemoryEmployeeCardService;
-import model.InMemoryPostService;
+import repository.InMemoryEmployeeCard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import service.EmployeeCardService;
-import service.CreateCardsEmployeesByInfoFromFileService;
-import service.PostService;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Files;
@@ -27,21 +28,15 @@ import java.util.stream.Collectors;
 public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesByInfoFromFileService {
 
     private final Pattern employeesFilePattern = Pattern.compile(
-            "firstName: (?<firstName>.+)" +
+                    "firstName: (?<firstName>.+)" +
                     "lastName: (?<lastName>.+)" +
                     "description: (?<description>.+|)" +
                     "characteristics: (?<characteristics>.+)" +
                     "postId: (?<postId>.+)");
 
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private EmployeeCardService employeeCardService;
+    private final EmployeeCardService employeeCardService;
+    private final PostService11 postService;
 
-    public CreateCardsEmployeesByInfoFromFile(EmployeeCardService employeeCardService, PostService postService) {
-        this.employeeCardService = employeeCardService;
-        this.postService = postService;
-    }
 
     @Override
     public void createPosts() {
@@ -54,13 +49,13 @@ public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesB
     }
 
     @Override
-    public InMemoryPostService getPosts() {
-        return (InMemoryPostService) postService;
+    public InMemoryPost getPosts() {
+        return (InMemoryPost) postService;
     }
 
     @Override
-    public InMemoryEmployeeCardService getEmployees() {
-        return (InMemoryEmployeeCardService) employeeCardService;
+    public InMemoryEmployeeCard getEmployees() {
+        return (InMemoryEmployeeCard) employeeCardService;
     }
 
     @Override
