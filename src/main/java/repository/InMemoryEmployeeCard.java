@@ -24,6 +24,18 @@ public class InMemoryEmployeeCard implements EmployeeCardService {
     }
 
     @Override
+    public void set(UUID id,Employee updateEmployee) {
+        System.out.println("HEEEEEEEEY= "+employees.size());
+        UUID idd= UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0");
+        for (int i=0;i<employees.size();i++){
+            if(employees.get(i).getPost().getId().equals(id))
+                employees.set(i,updateEmployee);
+                break;
+        }
+
+    }
+
+    @Override
     public void add(Employee employee) {
         this.employees.add(employee);
     }

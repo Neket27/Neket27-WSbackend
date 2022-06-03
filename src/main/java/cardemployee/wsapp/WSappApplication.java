@@ -5,9 +5,7 @@ import controller.EmployeeController;
 import controller.PostController;
 import model.Employee;
 import model.Post;
-import model.dtos.CreateEmployeeDto;
-import model.dtos.CreatePostDto;
-import model.dtos.DtoEntity;
+import model.dtos.*;
 import repository.InMemoryEmployeeCard;
 import repository.InMemoryPost;
 import service.*;
@@ -15,14 +13,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
+import utils.DtoUtils;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 @SpringBootApplication()
 @Import({Employee.class, Post.class, CreateCardsEmployeesByInfoFromFile.class,
-        InMemoryEmployeeCard.class, InMemoryPost.class,EmployeeService.class,
-        PostController.class,EmployeeController.class,PostService.class})
+        InMemoryEmployeeCard.class, InMemoryPost.class, EmployeeService.class,
+        PostController.class, EmployeeController.class, PostService.class,
+        CreateEmployeeDto.class, CreatePostDto.class, GetById.class, UpdateEmployeeDto.class,
+        DtoUtils.class
+})
 
 public class WSappApplication {
 
@@ -44,15 +46,25 @@ public class WSappApplication {
         createCardsEmployeesByInfoFromFile.readEmployeesFromJson(PATH);
 
 ////////////////////////////////////////////////////////////////
-        EmployeeService employeeService=context.getBean(EmployeeService.class);
-        EmployeeController employeeController = new EmployeeController(employeeService);
-        DtoEntity createEmployeeDto=employeeController.create(new CreateEmployeeDto("1", "2", "3", "4", new ArrayList<>(), new Post()));
+        EmployeeController employeeController= context.getBean(EmployeeController.class);
+        PostController postController=context.getBean(PostController.class);
+
+
+
+        /////////////////////////////////////
+        EmployeeService employeeService = context.getBean(EmployeeService.class);
+//        EmployeeController employeeController = new EmployeeController(employeeService);
+
+        DtoEntity createEmployeeDto = employeeController.create(new CreateEmployeeDto("1", "2", "3", "4", new ArrayList<>(), new Post()));
         System.out.println(createEmployeeDto);
         Post post = new Post(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "PostName");
-        PostController postController = new PostController(new PostService());
+//        PostController postController = new PostController(new PostService());
+
         System.out.println(postController.createPost(new CreatePostDto(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "PostName")));
 
+//        employeeController.update(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0"), new UpdateEmployeeDto( "RRRR", "NNN", "MMM", new ArrayList<>(), new Post()));
         employeeCardService.print();
+//        System.out.println(employeeController.getById(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0")));
     }
 
 }

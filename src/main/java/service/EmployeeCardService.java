@@ -13,10 +13,11 @@ import java.util.UUID;
 public interface EmployeeCardService {
 
 
-
     Employee get(UUID id);
 
     Employee get(String firstName, String lastName);
+
+    void set(UUID id,Employee updateEmployee);
 
     void add(Employee employee);
 
