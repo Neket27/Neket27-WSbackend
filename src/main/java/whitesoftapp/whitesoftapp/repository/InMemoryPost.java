@@ -1,12 +1,10 @@
 package whitesoftapp.whitesoftapp.repository;
 
-
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import whitesoftapp.whitesoftapp.model.Post;
 import whitesoftapp.whitesoftapp.service.PostService11;
-
 import java.util.Map;
 import java.util.UUID;
 

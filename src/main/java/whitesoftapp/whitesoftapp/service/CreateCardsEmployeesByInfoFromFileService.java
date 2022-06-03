@@ -1,6 +1,5 @@
 package whitesoftapp.whitesoftapp.service;
 
-
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Service;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;

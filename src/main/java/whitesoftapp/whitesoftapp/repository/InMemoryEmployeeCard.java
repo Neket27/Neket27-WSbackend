@@ -1,11 +1,9 @@
 package whitesoftapp.whitesoftapp.repository;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import whitesoftapp.whitesoftapp.model.Employee;
 import whitesoftapp.whitesoftapp.service.EmployeeCardService;
-
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

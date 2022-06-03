@@ -1,6 +1,5 @@
 package whitesoftapp.whitesoftapp.service;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import whitesoftapp.whitesoftapp.model.Employee;
@@ -8,13 +7,11 @@ import whitesoftapp.whitesoftapp.model.dtos.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.DtoEntity;
 import whitesoftapp.whitesoftapp.model.dtos.GetByIdEmployeeDto;
 import whitesoftapp.whitesoftapp.utils.DtoUtils;
-
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
 public class EmployeeService {
-
 
     private final EmployeeCardService inMemoryEmployeeCard;//не видит бин(inMemoryEmployeeCard) через конструктор
 

@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import whitesoftapp.whitesoftapp.model.Post;
-
 import java.util.List;
 
 @Data

@@ -1,6 +1,5 @@
 package whitesoftapp.whitesoftapp.action;
 
-
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
@@ -33,7 +32,7 @@ import java.util.stream.Collectors;
 public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesByInfoFromFileService {
 
     private final Pattern employeesFilePattern = Pattern.compile(
-                    "firstName: (?<firstName>.+)" +
+            "firstName: (?<firstName>.+)" +
                     "lastName: (?<lastName>.+)" +
                     "description: (?<description>.+|)" +
                     "characteristics: (?<characteristics>.+)" +
@@ -43,8 +42,6 @@ public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesB
     private final PostService11 postService;
     private final PostController postController;
     private final EmployeeController employeeController;
-
-
 
     @Override
     public void createPosts() {
@@ -121,7 +118,7 @@ public class CreateCardsEmployeesByInfoFromFile implements CreateCardsEmployeesB
         } catch (Exception e) {
             e.printStackTrace();
         }
-        jsonArray.forEach(employee ->  employeeController.create(dataEmployee((JSONObject) employee)));
+        jsonArray.forEach(employee -> employeeController.create(dataEmployee((JSONObject) employee)));
 //                employeeCardService.add(dataEmployee((JSONObject) employee)));
         return jsonArray;
     }
