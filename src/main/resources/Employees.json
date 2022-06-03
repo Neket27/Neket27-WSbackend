@@ -10,20 +10,20 @@
     "firstName": "Ivan",
     "lastName": "Ivanov",
     "description": "",
-    "characteristics": ["active", "cynical", "hard-working", "enthusiastic"],
+    "characteristics": ["resourceful", "reliable","active"],
     "postId": "762d15a5-3bc9-43ef-ae96-02a680a557d0"
   },
   {
-    "firstName": "Denis",
-    "lastName": "Losev",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sit amet dictum felis, eu fringilla eros. Sed et gravida neque. Nullam at egestas erat. Mauris vitae convallis nulla. Aenean condimentum lectus magna. Suspendisse viverra quam non ante pellentesque, a euismod nunc dapibus. Duis sed congue erat",
+    "firstName": "Nikita",
+    "lastName": "Ivanovich",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     "characteristics": ["honest", "introvert", "like criticism", "love of learning", "pragmatism"],
     "postId": "854ef89d-6c27-4635-926d-894d76a81707"
   },
   {
-    "firstName": "Pavel",
-    "lastName": "Ivanov",
-    "description": "Curabitur at luctus quam, non imperdiet nulla. Vivamus finibus vitae tellus in sodales. Nulla varius purus lorem, nec finibus odio finibus non. Proin nec diam posuere, sodales velit eu, laoreet felis. Sed nec tellus pellentesque, varius nisl sed, ullamcorper velit",
+    "firstName": "Egor",
+    "lastName": "Mex",
+    "description": "Curabitur at luctus quam, non imperdiet nulla. Vivamus finibus vitae tellus in sodales. Nulla varius purus lorem, nec finibus odio finibus non.",
     "characteristics": ["unpredictable", "self-confident", "energetic", "honest"],
     "postId": "762d15a5-3bc9-43ef-ae96-02a680a557d9"
   }
