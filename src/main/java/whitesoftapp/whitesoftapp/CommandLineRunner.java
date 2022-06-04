@@ -48,9 +48,16 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
 
         employeeController.create(new CreateEmployeeDto("1", "2", "3", "4", new ArrayList<>(Collections.singleton("blabla")), new Post(UUID.fromString("99999999-3bc9-43ef-ae96-02a680a557d0"), "this Post")));
         employeeController.update(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0"), new UpdateEmployeeDto("RRRR", "NNN", "MMM", new ArrayList<>(), new Post(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0"), "namePost")));
-        System.out.println(employeeController.getById(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0")));
+//        System.out.println(employeeController.getById(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0")));
 //        employeeCardService.print();
         postController.createPost(new CreatePostDto(UUID.fromString("11111111-6c27-4635-926d-894d76a81707"), "Post_11111"));
         System.out.println(postService.get(UUID.fromString("11111111-6c27-4635-926d-894d76a81707")));
+
+        System.out.println("list= " + employeeController.getList());
+
+        employeeController.remove(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d9"));
+        System.out.println(employeeController.getById(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d9")));
+        employeeCardService.print();
+
     }
 }

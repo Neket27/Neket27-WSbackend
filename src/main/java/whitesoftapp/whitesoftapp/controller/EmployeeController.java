@@ -6,6 +6,7 @@ import whitesoftapp.whitesoftapp.model.dtos.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.DtoEntity;
 import whitesoftapp.whitesoftapp.model.dtos.UpdateEmployeeDto;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -22,8 +23,16 @@ public class EmployeeController {
         employeeServise.updateEmployee(id, updateEmployeeDto);
     }
 
-    public DtoEntity getById(UUID id) {
+    public DtoEntity getById(UUID id) throws Exception {
         return employeeServise.getById(id);
+    }
+
+    public List<DtoEntity> getList(){
+       return employeeServise.getList();
+    }
+
+    public void remove(UUID id){
+        employeeServise.remove(id);
     }
 
 }

@@ -1,29 +1,21 @@
-package whitesoftapp.whitesoftapp.model;
+package whitesoftapp.whitesoftapp.model.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import whitesoftapp.whitesoftapp.model.Post;
 import java.util.List;
 
-
-//@Entity
-//@Table(name = "EMPLOYEE")
-@Embeddable
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Employee {
+public class RemoveEmployeeDto implements DtoEntity {
+
     private  String firstName;
     private  String lastName;
     private  String description;
-    private  List<String> characteristics;
+    private List<String> characteristics;
     private Post post;
-
 }
-
-
