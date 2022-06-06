@@ -2,26 +2,25 @@ package whitesoftapp.whitesoftapp.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import whitesoftapp.whitesoftapp.NotFoundException.EmployeeNotFoundException;
 import whitesoftapp.whitesoftapp.model.Employee;
-import whitesoftapp.whitesoftapp.service.EmployeeCardService;
 import java.util.*;
 
 @RequiredArgsConstructor
 @Repository
-public class InMemoryEmployeeCard implements EmployeeCardService {
+public class InMemoryEmployeeCard  {
 
     private final List<Employee> employees;
 
-    @Override
     public Employee get(UUID id) throws Exception {
         Employee e = this.employees.stream()
                 .filter(employee -> (employee.getPost().getId()).equals(id)).findFirst().orElse(null);
         if (e == null)
-            throw new Exception("There is no element with such an id");
+//            throw new Exception("There is no element with such an id");
+            throw new EmployeeNotFoundException(id);
         return e;
     }
 
-    @Override
     public Employee get(String firstName, String lastName) throws Exception {
         Employee e = this.employees.stream()
                 .filter(employee -> (employee.getFirstName().equals(firstName)) && (employee.getLastName().equals(lastName))).findFirst().orElse(null);
@@ -30,12 +29,10 @@ public class InMemoryEmployeeCard implements EmployeeCardService {
         return e;
     }
 
-    @Override
     public void removeFromListNull() {
         employees.removeAll(Collections.singleton(null));
     }
 
-    @Override
     public void set(UUID id, Employee updateEmployee) {
         UUID idd = UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0");
         for (int i = 0; i < employees.size(); i++) {
@@ -47,22 +44,18 @@ public class InMemoryEmployeeCard implements EmployeeCardService {
 
     }
 
-    @Override
     public void add(Employee employee) {
         this.employees.add(employee);
     }
 
-    @Override
     public void add(List<Employee> employees) {
         this.employees.addAll(employees);
     }
 
-    @Override
     public Comparator<? super Employee> comparatorInFirstNameAndLastName() {
         return Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getLastName);
     }
 
-    @Override
     public void printSortedByFirstAndLastName() {
         List<Employee> listEmployees = new ArrayList<>();
         listEmployees.addAll(this.employees);
@@ -73,7 +66,6 @@ public class InMemoryEmployeeCard implements EmployeeCardService {
         });
     }
 
-    @Override
     public void print() {
         this.employees.forEach(employee -> {
             System.out.println(employee);
@@ -81,7 +73,6 @@ public class InMemoryEmployeeCard implements EmployeeCardService {
         });
     }
 
-    @Override
     public List<Employee> getList() {
         return employees;
     }

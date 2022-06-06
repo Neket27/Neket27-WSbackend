@@ -1,12 +1,16 @@
 package whitesoftapp.whitesoftapp.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import whitesoftapp.whitesoftapp.apiExceptionHandler.ResponseDTO;
 import whitesoftapp.whitesoftapp.model.dtos.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.DtoEntity;
 import whitesoftapp.whitesoftapp.model.dtos.UpdateEmployeeDto;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
-import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -23,15 +27,20 @@ public class EmployeeController {
         employeeServise.updateEmployee(id, updateEmployeeDto);
     }
 
-    public DtoEntity getById(UUID id) throws Exception {
+    @GetMapping("/employees/{id}")
+    public DtoEntity getById(@PathVariable UUID id) throws Exception {
         return employeeServise.getById(id);
     }
 
-    public List<DtoEntity> getList(){
-       return employeeServise.getList();
+    @GetMapping("/employees/list")
+    public ResponseEntity<DtoEntity> getList() {
+        DtoEntity responseDTO = ResponseDTO.builder()
+                .status(HttpStatus.OK.toString())
+                .body(employeeServise.getList()).build();
+        return ResponseEntity.ok(responseDTO);
     }
 
-    public void remove(UUID id){
+    public void remove(UUID id) {
         employeeServise.remove(id);
     }
 

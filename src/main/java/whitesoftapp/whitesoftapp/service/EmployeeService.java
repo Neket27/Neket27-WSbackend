@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import whitesoftapp.whitesoftapp.model.Employee;
 import whitesoftapp.whitesoftapp.model.dtos.*;
+import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 import whitesoftapp.whitesoftapp.utils.DtoUtils;
 import java.util.*;
 
@@ -11,7 +12,7 @@ import java.util.*;
 @Service
 public class EmployeeService {
 
-    private final EmployeeCardService inMemoryEmployeeCard;//не видит бин(inMemoryEmployeeCard) через конструктор
+    private final InMemoryEmployeeCard inMemoryEmployeeCard;//не видит бин(inMemoryEmployeeCard) через конструктор
 
     public DtoEntity createEmployee(DtoEntity employeeCreateDto) {
         Employee employee = (Employee) new DtoUtils().convertToEntity(new Employee(), employeeCreateDto);

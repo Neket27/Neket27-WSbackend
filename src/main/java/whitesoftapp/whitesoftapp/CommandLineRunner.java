@@ -3,7 +3,8 @@ package whitesoftapp.whitesoftapp;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
-import whitesoftapp.whitesoftapp.action.CreateCardsEmployeesByInfoFromFile;
+import whitesoftapp.whitesoftapp.action.ReadInfoAboutEmployeesJson;
+import whitesoftapp.whitesoftapp.action.ReadInfoAboutEmployeesTxt;
 import whitesoftapp.whitesoftapp.controller.EmployeeController;
 import whitesoftapp.whitesoftapp.controller.PostController;
 import whitesoftapp.whitesoftapp.model.Post;
@@ -12,10 +13,7 @@ import whitesoftapp.whitesoftapp.model.dtos.CreatePostDto;
 import whitesoftapp.whitesoftapp.model.dtos.UpdateEmployeeDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
-import whitesoftapp.whitesoftapp.service.CreateCardsEmployeesByInfoFromFileService;
-import whitesoftapp.whitesoftapp.service.EmployeeCardService;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
-import whitesoftapp.whitesoftapp.service.PostService11;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.UUID;
@@ -34,12 +32,15 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
         if (PATH.isEmpty())
             throw new Exception("No PATH");
 
-        EmployeeCardService employeeCardService = context.getBean(InMemoryEmployeeCard.class);
-        PostService11 postService = context.getBean(InMemoryPost.class);
+        InMemoryEmployeeCard employeeCardService = context.getBean(InMemoryEmployeeCard.class);
+        InMemoryPost postService = context.getBean(InMemoryPost.class);
         postService.createPosts();
-        CreateCardsEmployeesByInfoFromFileService createCardsEmployeesByInfoFromFile =
-                context.getBean(CreateCardsEmployeesByInfoFromFile.class);
-        createCardsEmployeesByInfoFromFile.readEmployeesFromJson(PATH);
+        ReadInfoAboutEmployeesJson readInfoAboutEmployeesJson = context.getBean(ReadInfoAboutEmployeesJson.class);
+        ReadInfoAboutEmployeesTxt readInfoAboutEmployeesTxt = context.getBean(ReadInfoAboutEmployeesTxt.class);
+
+        readInfoAboutEmployeesJson.readEmployeesFromJson(PATH);
+//        String PATH1= "C:\\Users\\nikit\\Desktop\\info.txt";
+//        readInfoAboutEmployeesTxt.readEmployeesFromFile(PATH1);
 
 
         EmployeeController employeeController = context.getBean(EmployeeController.class);
@@ -56,7 +57,7 @@ public class CommandLineRunner implements org.springframework.boot.CommandLineRu
         System.out.println("list= " + employeeController.getList());
 
         employeeController.remove(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d9"));
-        System.out.println(employeeController.getById(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d9")));
+//        System.out.println(employeeController.getById(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d9")));
         employeeCardService.print();
 
     }
