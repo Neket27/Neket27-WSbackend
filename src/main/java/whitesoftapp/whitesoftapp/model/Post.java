@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ import java.util.UUID;
 public class Post {
     @Id
     @Column(name = "id", nullable = false)
-      private UUID id;
+    private UUID id;
     private String name;
 
 

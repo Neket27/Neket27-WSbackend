@@ -2,54 +2,48 @@ package whitesoftapp.whitesoftapp.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import whitesoftapp.whitesoftapp.NotFoundException.EmployeeNotFoundException;
 import whitesoftapp.whitesoftapp.model.Employee;
+import whitesoftapp.whitesoftapp.notFoundException.EmployeeNotFoundException;
 import java.util.*;
 
 @RequiredArgsConstructor
 @Repository
 public class InMemoryEmployeeCard  {
 
-    private final List<Employee> employees;
+    private final HashMap<UUID,Employee> employees;
 
-    public Employee get(UUID id) throws Exception {
-        Employee e = this.employees.stream()
-                .filter(employee -> (employee.getPost().getId()).equals(id)).findFirst().orElse(null);
-        if (e == null)
-//            throw new Exception("There is no element with such an id");
+    public Employee get(UUID id)  {
+        Employee employee=employees.get(id);
+        if(employee==null){
             throw new EmployeeNotFoundException(id);
-        return e;
+        }
+        return employee;
     }
 
     public Employee get(String firstName, String lastName) throws Exception {
-        Employee e = this.employees.stream()
-                .filter(employee -> (employee.getFirstName().equals(firstName)) && (employee.getLastName().equals(lastName))).findFirst().orElse(null);
-        if (e == null)
-            throw new Exception("There is no element with such firstName and lastName");
-        return e;
-    }
+        Employee employee=null;
+        for (Map.Entry<UUID, Employee> entry : employees.entrySet()) {
+            Employee value = entry.getValue();
+            if(value.getFirstName()==firstName && value.getLastName()==lastName)
+                employee =value;
+        }
+        if (employee == null)
+            throw new EmployeeNotFoundException("There is no element with such "+firstName+" and "+lastName+"");
+        return employee;
 
-    public void removeFromListNull() {
-        employees.removeAll(Collections.singleton(null));
     }
 
     public void set(UUID id, Employee updateEmployee) {
-        UUID idd = UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d0");
-        for (int i = 0; i < employees.size(); i++) {
-            if (employees.get(i).getPost().getId().equals(id)) {
-                employees.set(i, updateEmployee);
-                break;
-            }
-        }
 
+        employees.put(id,updateEmployee);
     }
 
-    public void add(Employee employee) {
-        this.employees.add(employee);
+    public void remove(UUID id){
+        employees.remove(id);
     }
 
-    public void add(List<Employee> employees) {
-        this.employees.addAll(employees);
+    public void add(UUID id,Employee employee) {
+        this.employees.put(id,employee);
     }
 
     public Comparator<? super Employee> comparatorInFirstNameAndLastName() {
@@ -57,8 +51,7 @@ public class InMemoryEmployeeCard  {
     }
 
     public void printSortedByFirstAndLastName() {
-        List<Employee> listEmployees = new ArrayList<>();
-        listEmployees.addAll(this.employees);
+        List<Employee> listEmployees = new ArrayList<>(employees.values());
         listEmployees.sort(comparatorInFirstNameAndLastName());
         listEmployees.forEach(employee -> {
             System.out.println(employee);
@@ -67,13 +60,10 @@ public class InMemoryEmployeeCard  {
     }
 
     public void print() {
-        this.employees.forEach(employee -> {
-            System.out.println(employee);
-            System.out.println(" ");
-        });
+        System.out.println("Employees: "+employees);
     }
 
-    public List<Employee> getList() {
+    public HashMap<UUID,Employee> getList() {
         return employees;
     }
 

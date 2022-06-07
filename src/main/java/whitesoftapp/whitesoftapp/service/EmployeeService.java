@@ -5,40 +5,41 @@ import org.springframework.stereotype.Service;
 import whitesoftapp.whitesoftapp.model.Employee;
 import whitesoftapp.whitesoftapp.model.dtos.*;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
-import whitesoftapp.whitesoftapp.utils.DtoUtils;
+import whitesoftapp.whitesoftapp.utils.DtoUtilsEmployee;
 import java.util.*;
 
 @RequiredArgsConstructor
 @Service
 public class EmployeeService {
 
-    private final InMemoryEmployeeCard inMemoryEmployeeCard;//не видит бин(inMemoryEmployeeCard) через конструктор
+    private final DtoUtilsEmployee dtoUtils;
+    private final InMemoryEmployeeCard inMemoryEmployeeCard;
 
-    public DtoEntity createEmployee(DtoEntity employeeCreateDto) {
-        Employee employee = (Employee) new DtoUtils().convertToEntity(new Employee(), employeeCreateDto);
-        inMemoryEmployeeCard.add(employee);
-        DtoEntity employeeDto = new DtoUtils().convertToDto(employee, new CreateEmployeeDto());
+    public EmployeeDto createEmployee(UUID id,EmployeeDto employeeCreateDto) {
+        Employee employee = dtoUtils.convertToEntity(new Employee(), employeeCreateDto);
+        inMemoryEmployeeCard.add(id,employee);
+        EmployeeDto employeeDto = dtoUtils.convertToDto(employee, new EmployeeDto());
         return employeeDto;
     }
 
-    public void updateEmployee(UUID id, DtoEntity updateEmployeeDto) {
-        Employee updateEmployee = (Employee) new DtoUtils().convertToEntity(new Employee(), updateEmployeeDto);
+    public void updateEmployee(UUID id, EmployeeDto updateEmployeeDto) {
+        Employee updateEmployee = dtoUtils.convertToEntity(new Employee(), updateEmployeeDto);
         inMemoryEmployeeCard.set(id, updateEmployee);
     }
 
-    public DtoEntity getById(UUID id) throws Exception {
+    public EmployeeDto getById(UUID id)  {
         Employee employee = inMemoryEmployeeCard.get(id);
-        DtoEntity employeeDto = new DtoUtils().convertToDto(employee, new GetByIdEmployeeDto());
+        EmployeeDto employeeDto = dtoUtils.convertToDto(employee, new EmployeeDto());
         return employeeDto;
     }
 
-    public List<DtoEntity> getList() {
-        return new DtoUtils().convertListToDto(inMemoryEmployeeCard.getList(), GetList.class);
+    public HashMap<UUID,EmployeeDto> getList() {
+        return dtoUtils.convertListToDto(inMemoryEmployeeCard.getList(), EmployeeDto.class);
+
     }
 
     public void remove(UUID id) {
-        inMemoryEmployeeCard.set(id, null);
-        inMemoryEmployeeCard.removeFromListNull();
+        inMemoryEmployeeCard.remove(id);
     }
 
 }

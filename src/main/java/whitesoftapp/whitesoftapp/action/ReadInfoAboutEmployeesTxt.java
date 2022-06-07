@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import whitesoftapp.whitesoftapp.controller.EmployeeController;
 import whitesoftapp.whitesoftapp.controller.PostController;
+import whitesoftapp.whitesoftapp.model.dtos.EmployeeDto;
+import whitesoftapp.whitesoftapp.notFoundException.EmployeeNotFoundException;
 import whitesoftapp.whitesoftapp.parser.ParsInfoEmployeeFromTxt;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 import java.nio.file.Files;
@@ -30,7 +32,7 @@ public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
         streamInfoEmployees.forEach(employee -> listEmployeesInfo.add(employee));
 
         if (listEmployeesInfo.isEmpty())
-            throw new Exception("The file is empty");
+            throw new EmployeeNotFoundException("The file is empty");
 
         List<String> listValueEmployee = new ArrayList<>();
         listEmployeesInfo.forEach(value -> {
@@ -40,7 +42,8 @@ public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
                 String infoOneEmployee = String.join("", listValueEmployee);
                 listValueEmployee.clear();
                 try {
-                    employeeController.create(parsInfoEmployeeFromTxt.dataEmployee(infoOneEmployee));
+                    EmployeeDto employee = parsInfoEmployeeFromTxt.dataEmployee(infoOneEmployee);
+                    employeeController.create(employee.getId(),employee);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

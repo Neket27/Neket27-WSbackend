@@ -2,17 +2,16 @@ package whitesoftapp.whitesoftapp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-import whitesoftapp.whitesoftapp.model.dtos.CreatePostDto;
-import whitesoftapp.whitesoftapp.model.dtos.DtoEntity;
+import whitesoftapp.whitesoftapp.model.dtos.PostDto;
 import whitesoftapp.whitesoftapp.service.PostService;
 
 @RequiredArgsConstructor
 @RestController
-public class PostController implements DtoEntity {
+public class PostController {
 
     private final PostService postService;
 
-    public DtoEntity createPost(CreatePostDto createPostDto) {
+    public PostDto createPost(PostDto createPostDto) {
         return postService.createPost(createPostDto);
     }
 }

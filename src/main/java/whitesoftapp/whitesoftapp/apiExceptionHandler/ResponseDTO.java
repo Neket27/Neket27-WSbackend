@@ -2,11 +2,10 @@ package whitesoftapp.whitesoftapp.apiExceptionHandler;
 
 import lombok.Builder;
 import lombok.Data;
-import whitesoftapp.whitesoftapp.model.dtos.DtoEntity;
 
 @Data
 @Builder
-public class ResponseDTO<T> implements DtoEntity {
+public class ResponseDTO<T> {
     private String status;
 
     @Builder.Default

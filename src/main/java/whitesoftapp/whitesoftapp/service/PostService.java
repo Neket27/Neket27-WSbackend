@@ -3,21 +3,21 @@ package whitesoftapp.whitesoftapp.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import whitesoftapp.whitesoftapp.model.Post;
-import whitesoftapp.whitesoftapp.model.dtos.CreatePostDto;
-import whitesoftapp.whitesoftapp.model.dtos.DtoEntity;
+import whitesoftapp.whitesoftapp.model.dtos.PostDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
-import whitesoftapp.whitesoftapp.utils.DtoUtils;
+import whitesoftapp.whitesoftapp.utils.DtoUtilsPost;
 
 @RequiredArgsConstructor
 @Service
 public class PostService {
 
     private final InMemoryPost inMemoryPost;
+    private final DtoUtilsPost dtoUtilsPost;
 
-    public DtoEntity createPost(DtoEntity createPostDto) {
-        Post post=(Post)  new DtoUtils().convertToEntity(new Post(),createPostDto);
+    public PostDto createPost(PostDto createPostDto) {
+        Post post= dtoUtilsPost.convertToEntity(new Post(),createPostDto);
         inMemoryPost.add(post);
-        return new DtoUtils().convertToDto(post, new CreatePostDto());
+        return dtoUtilsPost.convertToDto(post, new PostDto());
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreatePostDto implements DtoEntity {
+public class PostDto {
     private UUID id;
     private String name;
 
