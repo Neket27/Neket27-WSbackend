@@ -1,5 +1,6 @@
 package whitesoftapp.whitesoftapp.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import whitesoftapp.whitesoftapp.apiExceptionHandler.ResponseDTO;
 import whitesoftapp.whitesoftapp.model.dtos.EmployeeDto;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
+
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -16,35 +19,41 @@ import java.util.UUID;
 @Validated
 public class EmployeeController {
 
-    private final EmployeeService employeeServise;
+    private final EmployeeService employeeService;
 
-    public EmployeeDto create(UUID id,@RequestBody EmployeeDto employeeDto) {
-        return employeeServise.createEmployee(id,employeeDto);
+    @ApiOperation("Создание нового работника")
+    @PostMapping("/employee/create")
+    public EmployeeDto create(@RequestParam(value = "id")UUID id,@RequestBody EmployeeDto employeeDto) {
+        return employeeService.createEmployee(id,employeeDto);
     }
 
-    public void update(UUID id, EmployeeDto updateEmployeeDto) {
-        employeeServise.updateEmployee(id, updateEmployeeDto);
+    @ApiOperation("Обновление информации сотрудника")
+    @PostMapping("employee/update")
+    public void update(@RequestParam UUID id, @RequestBody EmployeeDto updateEmployeeDto) {
+        employeeService.updateEmployee(id, updateEmployeeDto);
     }
 
+    @ApiOperation("Получение сотрудника по id")
     @GetMapping("/employees/{id}")
     public ResponseEntity<ResponseDTO> getById(@PathVariable UUID id)  {
         ResponseDTO responseDTO = ResponseDTO.builder()
                 .status(HttpStatus.OK.toString())
-                .body(employeeServise.getById(id)).build();
-        System.out.println("ResponseDTO: "+responseDTO);
+                .body(employeeService.getById(id)).build();
+
         return ResponseEntity.ok(responseDTO);
     }
 
+    @ApiOperation("Вывод списка сотрудников")
     @GetMapping("/employees/list")
     public ResponseEntity<ResponseDTO> getList() {
         ResponseDTO responseDTO = ResponseDTO.builder()
                 .status(HttpStatus.OK.toString())
-                .body(employeeServise.getList()).build();
+                .body(employeeService.getList()).build();
         return ResponseEntity.ok(responseDTO);
     }
 
     public void remove(UUID id) {
-        employeeServise.remove(id);
+        employeeService.remove(id);
     }
 
 }

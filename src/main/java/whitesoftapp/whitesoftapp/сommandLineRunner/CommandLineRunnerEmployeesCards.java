@@ -2,6 +2,7 @@ package whitesoftapp.whitesoftapp.сommandLineRunner;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import whitesoftapp.whitesoftapp.action.ReadEmployeesByInfoFromFile;
 import whitesoftapp.whitesoftapp.action.ReadInfoAboutEmployeesJson;
 import whitesoftapp.whitesoftapp.action.ReadInfoAboutEmployeesTxt;
 import whitesoftapp.whitesoftapp.controller.EmployeeController;
@@ -25,8 +26,7 @@ public class CommandLineRunnerEmployeesCards implements org.springframework.boot
     private final PostService postService;
     private final InMemoryPost inMemoryPost;
     private final InMemoryEmployeeCard inMemoryEmployeeCard;
-    private final ReadInfoAboutEmployeesTxt readInfoAboutEmployeesTxt;
-    private final ReadInfoAboutEmployeesJson readInfoAboutEmployeesJson;
+    private final ReadEmployeesByInfoFromFile readInfoAboutEmployeesFromFile;
     private final EmployeeController employeeController;
     private final PostController postController;
 
@@ -41,7 +41,7 @@ public class CommandLineRunnerEmployeesCards implements org.springframework.boot
 
 
         inMemoryPost.createPosts();
-        readInfoAboutEmployeesJson.readEmployeesFromJson(PATH);
+        readInfoAboutEmployeesFromFile.readEmployeesFromFile(PATH);
 ////        String PATH1= "C:\\Users\\nikit\\Desktop\\info.txt";
 ////        readInfoAboutEmployeesTxt.readEmployeesFromFile(PATH1);
 //

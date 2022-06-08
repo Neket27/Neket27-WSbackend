@@ -11,8 +11,9 @@ import whitesoftapp.whitesoftapp.parser.ParsInfoEmployeeFromTxt;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @RequiredArgsConstructor
@@ -24,12 +25,10 @@ public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
     private final EmployeeController employeeController;
     private final ParsInfoEmployeeFromTxt parsInfoEmployeeFromTxt;
 
+    @Override
     public List<String> readEmployeesFromFile(String PATH) throws Exception {
         List<String> listEmployeesInfo = new ArrayList<>();
-
-        //  listEmployeesInfo.addAll((Collection<? extends String>) Files.lines(Paths.get(PATH))); Перестало работать
-        Stream<String> streamInfoEmployees = Files.lines(Paths.get(PATH));  //а так работает
-        streamInfoEmployees.forEach(employee -> listEmployeesInfo.add(employee));
+        listEmployeesInfo.addAll(Files.lines(Paths.get(PATH)).collect(Collectors.toList()));
 
         if (listEmployeesInfo.isEmpty())
             throw new EmployeeNotFoundException("The file is empty");
@@ -43,7 +42,7 @@ public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
                 listValueEmployee.clear();
                 try {
                     EmployeeDto employee = parsInfoEmployeeFromTxt.dataEmployee(infoOneEmployee);
-                    employeeController.create(employee.getId(),employee);
+                    employeeController.create(employee.getId(), employee);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

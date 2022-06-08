@@ -14,9 +14,6 @@ public class InMemoryEmployeeCard  {
 
     public Employee get(UUID id)  {
         Employee employee=employees.get(id);
-        if(employee==null){
-            throw new EmployeeNotFoundException(id);
-        }
         return employee;
     }
 
@@ -33,16 +30,12 @@ public class InMemoryEmployeeCard  {
 
     }
 
-    public void set(UUID id, Employee updateEmployee) {
-
-        employees.put(id,updateEmployee);
-    }
-
     public void remove(UUID id){
+
         employees.remove(id);
     }
 
-    public void add(UUID id,Employee employee) {
+    public void put(UUID id, Employee employee) {
         this.employees.put(id,employee);
     }
 

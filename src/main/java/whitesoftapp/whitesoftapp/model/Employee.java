@@ -5,14 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.Embeddable;
+
+import javax.persistence.*;
 import java.util.List;
 import java.util.UUID;
 
 
-//@Entity
-//@Table(name = "EMPLOYEE")
-@Embeddable
+@Entity
+@Table(name = "EMPLOYEE")
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
@@ -20,11 +20,14 @@ import java.util.UUID;
 public class Employee {
 
     @JsonProperty("postId")
+    @Id
     private UUID id;
-    private  String firstName;
-    private  String lastName;
-    private  String description;
-    private  List<String> characteristics;
+    private String firstName;
+    private String lastName;
+    private String description;
+    @OneToMany(targetEntity = Employee.class)
+    private List<String> characteristics;
+    @Embedded
     private Post post;
 
 }
