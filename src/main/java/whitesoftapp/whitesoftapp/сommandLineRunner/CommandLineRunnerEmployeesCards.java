@@ -2,21 +2,13 @@ package whitesoftapp.whitesoftapp.сommandLineRunner;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import whitesoftapp.whitesoftapp.action.ReadEmployeesByInfoFromFile;
-import whitesoftapp.whitesoftapp.action.ReadInfoAboutEmployeesJson;
-import whitesoftapp.whitesoftapp.action.ReadInfoAboutEmployeesTxt;
+import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.ReadEmployeesByInfoFromFile;
 import whitesoftapp.whitesoftapp.controller.EmployeeController;
 import whitesoftapp.whitesoftapp.controller.PostController;
-import whitesoftapp.whitesoftapp.model.Post;
-import whitesoftapp.whitesoftapp.model.dtos.PostDto;
-import whitesoftapp.whitesoftapp.model.dtos.EmployeeDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
 import whitesoftapp.whitesoftapp.service.PostService;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component

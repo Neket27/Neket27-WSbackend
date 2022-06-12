@@ -1,13 +1,13 @@
-package whitesoftapp.whitesoftapp.action;
+package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.parser;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.ParsInfoEmployeeFromTxt;
+import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.ReadEmployeesByInfoFromFile;
 import whitesoftapp.whitesoftapp.controller.EmployeeController;
 import whitesoftapp.whitesoftapp.controller.PostController;
-import whitesoftapp.whitesoftapp.model.dtos.EmployeeDto;
-import whitesoftapp.whitesoftapp.notFoundException.EmployeeNotFoundException;
-import whitesoftapp.whitesoftapp.parser.ParsInfoEmployeeFromTxt;
+import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -30,8 +30,9 @@ public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
         List<String> listEmployeesInfo = new ArrayList<>();
         listEmployeesInfo.addAll(Files.lines(Paths.get(PATH)).collect(Collectors.toList()));
 
-        if (listEmployeesInfo.isEmpty())
-            throw new EmployeeNotFoundException("The file is empty");
+        if (listEmployeesInfo.isEmpty()) {
+            throw new Exception("The file is empty");
+        }
 
         List<String> listValueEmployee = new ArrayList<>();
         listEmployeesInfo.forEach(value -> {

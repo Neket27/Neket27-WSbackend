@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.action;
+package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,17 +8,14 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import whitesoftapp.whitesoftapp.controller.EmployeeController;
 import whitesoftapp.whitesoftapp.model.Employee;
-import whitesoftapp.whitesoftapp.parser.ParsInfoEmployeeFromJson;
+import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.parser.ParsInfoEmployeeFromJson;
+
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Data
 @RequiredArgsConstructor

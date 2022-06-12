@@ -3,10 +3,9 @@ package whitesoftapp.whitesoftapp.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import whitesoftapp.whitesoftapp.model.Post;
-import whitesoftapp.whitesoftapp.model.dtos.PostDto;
-import whitesoftapp.whitesoftapp.notFoundException.EmployeeNotFoundException;
+import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
-import whitesoftapp.whitesoftapp.utils.DtoUtilsPost;
+import whitesoftapp.whitesoftapp.utils.mapper.PostMapper;
 
 import java.util.UUID;
 
@@ -15,12 +14,12 @@ import java.util.UUID;
 public class PostService {
 
     private final InMemoryPost inMemoryPost;
-    private final DtoUtilsPost dtoUtilsPost;
+    private final PostMapper postMapper;
 
-    public PostDto createPost(PostDto createPostDto) {
-        Post post = dtoUtilsPost.convertToEntity(new Post(), createPostDto);
+    public PostDto createPost(PostDto postDto) {
+        Post post = postMapper.toPost(postDto);
         inMemoryPost.add(post);
-        return dtoUtilsPost.convertToDto(post, new PostDto());
+        return postDto;
     }
 
     public Post getById(UUID id) throws Exception {

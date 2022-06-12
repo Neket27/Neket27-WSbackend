@@ -3,7 +3,7 @@ package whitesoftapp.whitesoftapp.repository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import whitesoftapp.whitesoftapp.model.Employee;
-import whitesoftapp.whitesoftapp.notFoundException.EmployeeNotFoundException;
+
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -24,8 +24,8 @@ public class InMemoryEmployeeCard  {
             if(value.getFirstName()==firstName && value.getLastName()==lastName)
                 employee =value;
         }
-        if (employee == null)
-            throw new EmployeeNotFoundException("There is no element with such "+firstName+" and "+lastName+"");
+//        if (employee == null)
+//            throw new EmployeeNotFoundException("There is no element with such "+firstName+" and "+lastName+"");
         return employee;
 
     }

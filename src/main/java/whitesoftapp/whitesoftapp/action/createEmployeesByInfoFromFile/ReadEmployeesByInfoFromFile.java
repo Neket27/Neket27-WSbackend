@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.action;
+package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile;
 
 import java.util.List;
 

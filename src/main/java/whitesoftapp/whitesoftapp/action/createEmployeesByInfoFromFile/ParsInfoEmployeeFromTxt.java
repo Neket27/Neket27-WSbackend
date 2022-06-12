@@ -1,10 +1,10 @@
-package whitesoftapp.whitesoftapp.parser;
+package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import whitesoftapp.whitesoftapp.model.dtos.EmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
 
 import java.util.Arrays;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Primary
 @Component
-public class ParsInfoEmployeeFromTxt implements Parser {
+public class ParsInfoEmployeeFromTxt {
 
     private final Pattern employeesFilePattern = Pattern.compile(
                     "firstName: (?<firstName>.+)" +

@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.model.dtos;
+package whitesoftapp.whitesoftapp.model.dtos.post;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,5 +13,4 @@ import java.util.UUID;
 public class PostDto {
     private UUID id;
     private String name;
-
 }

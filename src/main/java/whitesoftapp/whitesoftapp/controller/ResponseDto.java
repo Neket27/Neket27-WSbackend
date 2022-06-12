@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.apiExceptionHandler;
+package whitesoftapp.whitesoftapp.controller;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 @Builder
-public class ResponseDTO<T> {
+public class ResponseDto<T> {
     private String status;
 
     @Builder.Default

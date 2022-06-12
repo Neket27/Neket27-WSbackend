@@ -1,25 +1,18 @@
-package whitesoftapp.whitesoftapp.model;
+package whitesoftapp.whitesoftapp.model.dtos.post;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Builder
-@Embeddable
-public class Post {
-    @Id
-    @Column(name = "id", nullable = false)
+public class CreatePostDto {
+
     @NotNull(message = "Post id = null")
     private UUID id;
 

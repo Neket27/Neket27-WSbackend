@@ -5,16 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import whitesoftapp.whitesoftapp.apiExceptionHandler.ResponseDTO;
+import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.Employee;
+import whitesoftapp.whitesoftapp.model.JobType;
 import whitesoftapp.whitesoftapp.model.Post;
-import whitesoftapp.whitesoftapp.model.dtos.EmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -31,8 +31,10 @@ class EmployeeControllerTest {
             .firstName("firstName")
             .lastName("LastName")
             .description("descriptions")
-            .characteristics(Collections.singletonList("characterustics"))
+            .characteristics(Collections.singletonList("characteristics"))
             .post(post)
+            .contacts(new Contacts())
+            .jobType(new JobType("1","2","3","4","5"))
             .build();
 
     Employee employee = Employee.builder()
@@ -40,13 +42,21 @@ class EmployeeControllerTest {
             .firstName("firstName")
             .lastName("LastName")
             .description("descriptions")
-            .characteristics(Collections.singletonList("characterustics"))
+            .characteristics(Collections.singletonList("characteristics"))
             .post(post)
+            .contacts(new Contacts())
+            .jobType(new JobType("1","2","3","4","5"))
             .build();
 
-    ResponseDTO responseDTO = ResponseDTO.builder()
-            .status("OKE")
-            .body(employeeDto)
+    CreateEmployeeDto createEmployeeDto=CreateEmployeeDto.builder()
+            .id(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .firstName("firstName")
+            .lastName("LastName")
+            .description("descriptions")
+            .characteristics(Collections.singletonList("characteristics"))
+            .post(post)
+            .contacts(new Contacts())
+            .jobType(new JobType("1","2","3","4","5"))
             .build();
 
     @Test
@@ -78,9 +88,10 @@ class EmployeeControllerTest {
         inMemoryEmployeeCard.put(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), employee);
 
         //Act
-        ResponseEntity<ResponseDTO> responseDto = employeeController.getById(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"));
+        ResponseEntity<ResponseDto> responseDto = employeeController.getById(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"));
 
         //Assert
+        employee.getContacts();
         assertThat(responseDto.getBody().getBody()).isEqualTo(employeeDto);
 
     }
@@ -93,7 +104,7 @@ class EmployeeControllerTest {
         inMemoryEmployeeCard.put(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), employee);
         storageEmployeesDto.put(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), employeeDto);
 
-        ResponseDTO responseDTO = ResponseDTO.builder()
+        ResponseDto responseDTO = ResponseDto.builder()
                 .status(HttpStatus.OK.toString())
                 .body(storageEmployeesDto).build();
         //Act
@@ -112,5 +123,27 @@ class EmployeeControllerTest {
 
         //Assert
         assertThat(inMemoryEmployeeCard.get(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))).isEqualTo(null);
+    }
+
+    @Test
+    void createArg(){
+        //Arrange
+
+        //Act
+        employeeController.create(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"),createEmployeeDto);
+
+        //Assert
+        assertThat(inMemoryEmployeeCard.get(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))).isEqualTo(employee);
+    }
+
+    @Test
+    void updateArg(){
+        //Arrange
+
+        //Act
+        employeeController.update(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"),createEmployeeDto);
+
+        //Assert
+        assertThat(inMemoryEmployeeCard.get(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))).isEqualTo(employee);
     }
 }

@@ -4,55 +4,69 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import whitesoftapp.whitesoftapp.apiExceptionHandler.ResponseDTO;
-import whitesoftapp.whitesoftapp.model.dtos.EmployeeDto;
+import whitesoftapp.whitesoftapp.action.CreateEmployeeArgumentAction;
+import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
-@Validated
+@RequestMapping("/employees")
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final CreateEmployeeArgumentAction createEmployeeArgumentAction;
+
+    @ApiOperation("Создание нового работника Arg")
+    @PostMapping("/createArg/{id}")
+    public EmployeeDto create(@RequestParam(value = "id") UUID id, @Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
+        return employeeService.createEmployee(id, createEmployeeArgumentAction.create(createEmployeeDto));
+    }
+
+    @ApiOperation("Обновление информации сотрудника Arg")
+    @PostMapping("/updateArg/{id}")
+    public void update(@RequestParam UUID id, @Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
+        employeeService.updateEmployee(id, createEmployeeArgumentAction.create(createEmployeeDto));
+    }
+
 
     @ApiOperation("Создание нового работника")
-    @PostMapping("/employee/create")
-    public EmployeeDto create(@RequestParam(value = "id")UUID id,@RequestBody EmployeeDto employeeDto) {
-        return employeeService.createEmployee(id,employeeDto);
+    @PostMapping("/create/{id}")
+    public EmployeeDto create(@RequestParam(value = "id") UUID id, @Valid @RequestBody EmployeeDto employeeDto) {
+        return employeeService.createEmployee(id, employeeDto);
     }
 
     @ApiOperation("Обновление информации сотрудника")
-    @PostMapping("employee/update")
-    public void update(@RequestParam UUID id, @RequestBody EmployeeDto updateEmployeeDto) {
+    @PostMapping("/update/{id}")
+    public void update(@RequestParam UUID id, @Valid @RequestBody EmployeeDto updateEmployeeDto) {
         employeeService.updateEmployee(id, updateEmployeeDto);
     }
 
     @ApiOperation("Получение сотрудника по id")
-    @GetMapping("/employees/{id}")
-    public ResponseEntity<ResponseDTO> getById(@PathVariable UUID id)  {
-        ResponseDTO responseDTO = ResponseDTO.builder()
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<ResponseDto> getById(@PathVariable UUID id) {
+        ResponseDto responseDTO = ResponseDto.builder()
                 .status(HttpStatus.OK.toString())
                 .body(employeeService.getById(id)).build();
-
         return ResponseEntity.ok(responseDTO);
     }
 
     @ApiOperation("Вывод списка сотрудников")
-    @GetMapping("/employees/list")
-    public ResponseEntity<ResponseDTO> getList() {
-        ResponseDTO responseDTO = ResponseDTO.builder()
+    @GetMapping("/list")
+    public ResponseEntity<ResponseDto> getList() {
+        ResponseDto responseDTO = ResponseDto.builder()
                 .status(HttpStatus.OK.toString())
                 .body(employeeService.getList()).build();
         return ResponseEntity.ok(responseDTO);
     }
 
-    public void remove(UUID id) {
+    @ApiOperation("Удаление работника по id")
+    @GetMapping("/remove/{id}")
+    public void remove(@PathVariable UUID id) {
         employeeService.remove(id);
     }
 
