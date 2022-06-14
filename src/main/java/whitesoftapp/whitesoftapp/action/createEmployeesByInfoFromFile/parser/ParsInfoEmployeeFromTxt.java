@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile;
+package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.parser;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

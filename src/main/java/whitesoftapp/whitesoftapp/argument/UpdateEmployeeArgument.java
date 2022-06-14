@@ -4,19 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.JobType;
 import whitesoftapp.whitesoftapp.model.Post;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class CreateEmployeeArgument {
+public class UpdateEmployeeArgument {
+
+    private UUID id;
 
     @NotBlank(message = "Name is mandatory")
     private String firstName;
@@ -37,5 +39,4 @@ public class CreateEmployeeArgument {
 
     @NotNull(message = "JobType is mandatory")
     private JobType jobType;
-
 }

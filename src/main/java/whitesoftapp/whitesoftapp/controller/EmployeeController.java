@@ -6,10 +6,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import whitesoftapp.whitesoftapp.action.CreateEmployeeArgumentAction;
+import whitesoftapp.whitesoftapp.action.UpdateEmployeeArgumentAction;
 import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
-
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -20,24 +21,25 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
     private final CreateEmployeeArgumentAction createEmployeeArgumentAction;
+    private final UpdateEmployeeArgumentAction updateEmployeeArgumentAction;
 
     @ApiOperation("Создание нового работника Arg")
-    @PostMapping("/createArg/{id}")
-    public EmployeeDto create(@RequestParam(value = "id") UUID id, @Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
-        return employeeService.createEmployee(id, createEmployeeArgumentAction.create(createEmployeeDto));
+    @PostMapping("/createArg")
+    public EmployeeDto create(@Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
+        return employeeService.createEmployee(createEmployeeArgumentAction.create(createEmployeeDto));
     }
 
     @ApiOperation("Обновление информации сотрудника Arg")
     @PostMapping("/updateArg/{id}")
-    public void update(@RequestParam UUID id, @Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
-        employeeService.updateEmployee(id, createEmployeeArgumentAction.create(createEmployeeDto));
+    public void update(@RequestParam UUID id, @Valid @RequestBody UpdateEmployeeDto updateEmployeeDto) {
+        employeeService.updateEmployee(id, updateEmployeeArgumentAction.update(updateEmployeeDto));
     }
 
 
     @ApiOperation("Создание нового работника")
-    @PostMapping("/create/{id}")
-    public EmployeeDto create(@RequestParam(value = "id") UUID id, @Valid @RequestBody EmployeeDto employeeDto) {
-        return employeeService.createEmployee(id, employeeDto);
+    @PostMapping("/create")
+    public EmployeeDto create(@Valid @RequestBody EmployeeDto employeeDto) {
+        return employeeService.createEmployee(employeeDto);
     }
 
     @ApiOperation("Обновление информации сотрудника")

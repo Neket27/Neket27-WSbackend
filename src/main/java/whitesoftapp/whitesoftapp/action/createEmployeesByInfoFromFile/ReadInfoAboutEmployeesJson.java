@@ -30,7 +30,7 @@ public class ReadInfoAboutEmployeesJson implements ReadEmployeesByInfoFromFile {
     @Override
     public List<String> readEmployeesFromFile(String PATH) throws IOException {
         List<Employee> listEmployees = objectMapper.readValue(new File(PATH), new TypeReference<List<Employee>>() {});
-        listEmployees.forEach(employee -> employeeController.create(employee.getId(),parsInfoEmployeeFromJson.dataEmployee(employee)));
+        listEmployees.forEach(employee -> employeeController.create(parsInfoEmployeeFromJson.dataEmployee(employee)));
         return Files.lines(Paths.get(PATH)).collect(Collectors.toList());
     }
 

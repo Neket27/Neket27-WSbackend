@@ -1,10 +1,9 @@
-package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.parser;
+package whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.ParsInfoEmployeeFromTxt;
-import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.ReadEmployeesByInfoFromFile;
+import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.parser.ParsInfoEmployeeFromTxt;
 import whitesoftapp.whitesoftapp.controller.EmployeeController;
 import whitesoftapp.whitesoftapp.controller.PostController;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
@@ -43,7 +42,7 @@ public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
                 listValueEmployee.clear();
                 try {
                     EmployeeDto employee = parsInfoEmployeeFromTxt.dataEmployee(infoOneEmployee);
-                    employeeController.create(employee.getId(), employee);
+                    employeeController.create(employee);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

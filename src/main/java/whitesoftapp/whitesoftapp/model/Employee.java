@@ -21,7 +21,7 @@ public class Employee {
 
     @JsonProperty("postId")
     @Id
-    @NotNull(message = "Employee id = null")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @NotBlank(message = "Name is mandatory")

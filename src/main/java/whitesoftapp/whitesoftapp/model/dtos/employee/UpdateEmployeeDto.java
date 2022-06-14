@@ -1,41 +1,39 @@
-package whitesoftapp.whitesoftapp.argument;
+package whitesoftapp.whitesoftapp.model.dtos.employee;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.JobType;
 import whitesoftapp.whitesoftapp.model.Post;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Builder
-public class CreateEmployeeArgument {
+public class UpdateEmployeeDto {
 
-    @NotBlank(message = "Name is mandatory")
+    @NotNull(message = "ID_CreateEmployeeDto = null")
+    @JsonProperty("postId")
+    private UUID id;
+    @NotBlank
     private String firstName;
-
-    @NotBlank(message = "Last name is mandatory")
+    @NotBlank
     private String lastName;
-
+    @NotBlank
     private String description;
-
-    @NotNull(message = "Characteristics are mandatory")
+    @NotNull
     private List<String> characteristics;
-
-    @NotNull(message = "Post is mandatory")
+    @NotNull
     private Post post;
-
-    @NotNull(message = "Contacts are mandatory")
+    @NotNull
     private Contacts contacts;
-
-    @NotNull(message = "JobType is mandatory")
+    @NotNull
     private JobType jobType;
-
 }
