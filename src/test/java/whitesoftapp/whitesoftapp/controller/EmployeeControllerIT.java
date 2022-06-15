@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.Employee;
@@ -24,7 +25,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class EmployeeControllerTest {
+class EmployeeControllerIT {
 
     @Autowired
     private WebTestClient webClient;
@@ -108,22 +109,12 @@ class EmployeeControllerTest {
 
     @Test
     void update() {
-
-           //Act
-        //еслли записи не будет с таким id, то она создастс€, иначе обновитс€.
-        employeeController.update(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), employeeDto);
-
-        //Assert
-        assertThat(inMemoryEmployeeCard.get(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))).isEqualTo(employee);
-    }
-
-    @Test
-    void getById() {
         //Arrange
-        inMemoryEmployeeCard.put(employee.getId(), employee);
-
-        EmployeeDto resultEmployeeDto = webClient.get().uri("/employees/getById/{id}", "854ef89d-6c27-4635-926d-894d76a81707")
+        EmployeeDto resultResponseDto = webClient.post()
+                .uri("/employees/create")
+                .bodyValue(createEmployeeDto)
                 .exchange()
+                //Act
                 .expectStatus()
                 .isOk()
                 .expectBody(EmployeeDto.class)
@@ -131,8 +122,39 @@ class EmployeeControllerTest {
                 .getResponseBody();
 
         //Assert
-        Assertions.assertEquals(resultEmployeeDto,employeeDto);
+        Assertions.assertEquals(resultResponseDto.getFirstName(), employeeDto.getFirstName());
+        Assertions.assertEquals(resultResponseDto.getLastName(), employeeDto.getLastName());
+        Assertions.assertEquals(resultResponseDto.getDescription(), resultResponseDto.getDescription());
+        Assertions.assertEquals(resultResponseDto.getCharacteristics(), employeeDto.getCharacteristics());
+        Assertions.assertEquals(resultResponseDto.getPost(), employeeDto.getPost());
+        Assertions.assertEquals(resultResponseDto.getContacts(), employeeDto.getContacts());
+        Assertions.assertEquals(resultResponseDto.getJobType(), employeeDto.getJobType());
+    }
 
+    @Test
+    void getById() {
+        //Arrange
+        inMemoryEmployeeCard.put(employee.getId(), employee);
+        ResponseDto responseDTO = ResponseDto.builder()
+                .status(HttpStatus.OK.toString())
+                .body(employeeDto)
+                .build();
+
+        ResponseDto resultResponseDTO = webClient.get().uri("/employees/getById/{id}", "854ef89d-6c27-4635-926d-894d76a81707")
+                .exchange()
+                //Act
+                .expectStatus()
+                .isOk()
+                .expectBody(ResponseDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        //Assert
+
+        //“ер€етс€ тип данных у body
+        // Expected :ResponseDto(status=200 OK, message=Success!, body={id=854ef89d-6c27-4635-926d-894d76a81707, firstName=firstName, lastName=LastName, description=descriptions, characteristics=[characteristics], post={id=854ef89d-6c27-4635-926d-894d76a81707, name=newPo ...
+        // Actual   :ResponseDto(status=200 OK, message=Success!, body=EmployeeDto(id=854ef89d-6c27-4635-926d-894d76a81707, firstName=firstName, lastName=LastName, description=descriptions, characteristics=[characteristics], post=Post(id=854ef89d-6c27-4635-926d-894d76a81 ...
+        Assertions.assertEquals(resultResponseDTO, responseDTO);
     }
 
     @Test
@@ -150,7 +172,7 @@ class EmployeeControllerTest {
                 .getResponseBody();
 
         //¬озращаетс€ resultEmployee: {message=Success!, body={}, status=200 OK}
-        Assertions.assertEquals(resultEmployee,null);
+        Assertions.assertEquals(resultEmployee, null);
 
     }
 

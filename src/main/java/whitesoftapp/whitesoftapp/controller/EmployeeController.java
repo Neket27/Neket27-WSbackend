@@ -11,6 +11,7 @@ import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 import whitesoftapp.whitesoftapp.service.EmployeeService;
+
 import javax.validation.Valid;
 import java.util.UUID;
 
@@ -53,8 +54,9 @@ public class EmployeeController {
     public ResponseEntity<ResponseDto> getById(@PathVariable UUID id) {
         ResponseDto responseDTO = ResponseDto.builder()
                 .status(HttpStatus.OK.toString())
-                .body(employeeService.getById(id)).build();
-        return ResponseEntity.ok(responseDTO);
+                .body(employeeService.getById(id))
+                .build();
+         return ResponseEntity.ok(responseDTO);
     }
 
     @ApiOperation("Вывод списка сотрудников")
