@@ -9,8 +9,12 @@ import whitesoftapp.whitesoftapp.model.Employee;
 import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
+import whitesoftapp.whitesoftapp.repository.InMemoryContacts;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
+import whitesoftapp.whitesoftapp.repository.InMemoryPost;
 import whitesoftapp.whitesoftapp.utils.mapper.EmployeeMapper;
+import whitesoftapp.whitesoftapp.utils.mapper.EmployeeMapperBuilder;
+
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -20,28 +24,29 @@ public class EmployeeService {
 
     private final InMemoryEmployeeCard inMemoryEmployeeCard;
     private final EmployeeMapper employeeMapper;
+    private final EmployeeMapperBuilder employeeMapperBuilder;
 
 
     public EmployeeDto createEmployee(CreateEmployeeArgument createEmployeeArgument) {
-        Employee employee = employeeMapper.toEmployeeFromArgument(createEmployeeArgument);
+        Employee employee = employeeMapperBuilder.toEntity(createEmployeeArgument);
         inMemoryEmployeeCard.add(employee);
-        return employeeMapper.toDto(employee);
+        return employeeMapperBuilder.toDto(employee);
     }
 
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
-        Employee employee = employeeMapper.toEmployeeFromEmployeeDto(employeeDto);
+        Employee employee = employeeMapperBuilder.toEntity(employeeDto);
         inMemoryEmployeeCard.add(employee);
-        return employeeMapper.toDto(employee);
+        return employeeMapperBuilder.toDto(employee);
     }
 
     public void updateEmployee(UUID id, UpdateEmployeeArgument updateEmployeeArgument) {
-        Employee updateEmployee = employeeMapper.toEmployeeFromArgument(updateEmployeeArgument);
-        inMemoryEmployeeCard.put(id, updateEmployee);
+        Employee employee = employeeMapperBuilder.toEntity(updateEmployeeArgument);
+        inMemoryEmployeeCard.put(id, employee);
     }
 
     public void updateEmployee(UUID id, EmployeeDto employeeDto) {
-        Employee updateEmployee = employeeMapper.toEmployee(employeeDto);
-        inMemoryEmployeeCard.put(id, updateEmployee);
+        Employee employee = employeeMapperBuilder.toEntity(employeeDto);
+        inMemoryEmployeeCard.put(id, employee);
     }
 
     public EmployeeDto getById(UUID id) {
@@ -49,7 +54,7 @@ public class EmployeeService {
         if (employee == null)
             throw new ApiRequestExceptionEmployee("Нет Работника с таким id");
 
-        return employeeMapper.toDto(employee);
+        return employeeMapperBuilder.toDto(employee);
     }
 
     public HashMap<UUID, EmployeeDto> getList() {

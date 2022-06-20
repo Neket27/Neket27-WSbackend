@@ -30,22 +30,21 @@ public class EmployeeController {
         return employeeService.createEmployee(createEmployeeArgumentAction.create(createEmployeeDto));
     }
 
-    @ApiOperation("Обновление информации сотрудника Arg")
-    @PostMapping("/updateArg/{id}")
-    public void update(@RequestParam UUID id, @Valid @RequestBody UpdateEmployeeDto updateEmployeeDto) {
-        employeeService.updateEmployee(id, updateEmployeeArgumentAction.update(updateEmployeeDto));
-    }
-
-
     @ApiOperation("Создание нового работника")
     @PostMapping("/create")
     public EmployeeDto create(@Valid @RequestBody EmployeeDto employeeDto) {
         return employeeService.createEmployee(employeeDto);
     }
 
+    @ApiOperation("Обновление информации сотрудника Arg")
+    @PostMapping(value="/updateArg/{id}", consumes={"application/json"})
+    public void update(@RequestParam UUID id, @RequestBody UpdateEmployeeDto updateEmployeeDto) {
+        employeeService.updateEmployee(id, updateEmployeeArgumentAction.update(updateEmployeeDto));
+    }
+
     @ApiOperation("Обновление информации сотрудника")
     @PostMapping("/update/{id}")
-    public void update(@RequestParam UUID id, @Valid @RequestBody EmployeeDto updateEmployeeDto) {
+    public void update(@RequestParam UUID id, @RequestBody EmployeeDto updateEmployeeDto) {
         employeeService.updateEmployee(id, updateEmployeeDto);
     }
 

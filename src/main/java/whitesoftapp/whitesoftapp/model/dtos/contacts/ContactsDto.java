@@ -1,20 +1,13 @@
-package whitesoftapp.whitesoftapp.model;
+package whitesoftapp.whitesoftapp.model.dtos.contacts;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import javax.persistence.Embeddable;
+
 import javax.persistence.Id;
 import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@Embeddable
-public class Contacts {
+public class ContactsDto {
 
     @Id
     private UUID id;

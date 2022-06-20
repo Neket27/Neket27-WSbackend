@@ -22,12 +22,12 @@ public class PostService {
         return postDto;
     }
 
-    public Post getById(UUID id) throws Exception {
+    public PostDto getById(UUID id) throws Exception {
         Post post = inMemoryPost.get(id);
         if (post == null) {
             throw new Exception("No post with id = "+id);
         }
-        return post;
+        return postMapper.toDto(post);
     }
 
 }

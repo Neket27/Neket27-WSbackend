@@ -1,11 +1,12 @@
 package whitesoftapp.whitesoftapp.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
 import whitesoftapp.whitesoftapp.service.PostService;
+
+import javax.validation.Valid;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -14,8 +15,13 @@ public class PostController {
 
     private final PostService postService;
 
-    @GetMapping("/createPost")
-    public PostDto createPost(PostDto createPostDto) {
+    @PostMapping("/createPost")
+    public PostDto createPost(@Valid @RequestBody PostDto createPostDto) {
         return postService.createPost(createPostDto);
+    }
+
+    @GetMapping("/getPost/{id}")
+    public PostDto getById(@PathVariable UUID id) throws Exception {
+        return postService.getById(id);
     }
 }

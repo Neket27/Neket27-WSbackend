@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.JobType;
-import whitesoftapp.whitesoftapp.model.Post;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -32,10 +30,10 @@ public class UpdateEmployeeArgument {
     private List<String> characteristics;
 
     @NotNull(message = "Post is mandatory")
-    private Post post;
+    private UUID postId;
 
     @NotNull(message = "Contacts are mandatory")
-    private Contacts contacts;
+    private UUID contactsId;
 
     @NotNull(message = "JobType is mandatory")
     private JobType jobType;

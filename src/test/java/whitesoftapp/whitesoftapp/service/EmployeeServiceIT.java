@@ -40,7 +40,7 @@ class EmployeeServiceIT {
             .characteristics(Collections.singletonList("characteristics"))
             .post(post)
             .contacts(new Contacts())
-            .jobType(new JobType("1", "2", "3", "4", "5"))
+            .jobType(JobType.CONTRACT)
             .build();
 
     EmployeeDto employeeDto = EmployeeDto.builder()
@@ -49,9 +49,9 @@ class EmployeeServiceIT {
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .post(post)
-            .contacts(new Contacts())
-            .jobType(new JobType("1", "2", "3", "4", "5"))
+            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .jobType(JobType.CONTRACT)
             .build();
 
     CreateEmployeeDto createEmployeeDto = CreateEmployeeDto.builder()
@@ -59,9 +59,9 @@ class EmployeeServiceIT {
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .post(post)
-            .contacts(new Contacts())
-            .jobType(new JobType("1", "2", "3", "4", "5"))
+            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .jobType(JobType.CONTRACT)
             .build();
 
     CreateEmployeeArgument createEmployeeArgument = CreateEmployeeArgument.builder()
@@ -69,8 +69,8 @@ class EmployeeServiceIT {
             .lastName(employee.getLastName())
             .description(employee.getDescription())
             .characteristics(employee.getCharacteristics())
-            .post(employee.getPost())
-            .contacts(employee.getContacts())
+            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
             .jobType(employee.getJobType())
             .build();
 
@@ -80,8 +80,8 @@ class EmployeeServiceIT {
             .lastName(employee.getLastName())
             .description(employee.getDescription())
             .characteristics(employee.getCharacteristics())
-            .post(employee.getPost())
-            .contacts(employee.getContacts())
+            .postId(employee.getPost().getId())
+            .contactsId(employee.getContacts().getId())
             .jobType(employee.getJobType())
             .build();
 
@@ -103,8 +103,8 @@ class EmployeeServiceIT {
                 .lastName(employee.getLastName())
                 .description(employee.getDescription())
                 .characteristics(employee.getCharacteristics())
-                .post(employee.getPost())
-                .contacts(employee.getContacts())
+                .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+                .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
                 .jobType(employee.getJobType())
                 .build();
 

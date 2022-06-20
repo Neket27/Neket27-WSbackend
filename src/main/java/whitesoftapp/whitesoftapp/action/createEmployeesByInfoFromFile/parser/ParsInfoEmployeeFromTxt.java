@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import whitesoftapp.whitesoftapp.model.JobType;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
 
@@ -43,7 +44,9 @@ public class ParsInfoEmployeeFromTxt {
                 .lastName(m.group("firstName"))
                 .description(m.group("description"))
                 .characteristics(characteristics)
-                .post(inMemoryPost.get(UUID.fromString(m.group("postId"))))
+                .postId(UUID.fromString(m.group("postId")))
+                .contactsId(UUID.fromString(m.group("contacts")))
+                .jobType(JobType.valueOf(m.group("contacts")))
                 .build();
 
         return employeeDto;

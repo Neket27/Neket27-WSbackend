@@ -32,8 +32,8 @@ public class CommandLineRunnerEmployeesCards implements org.springframework.boot
             throw new Exception("No PATH");
 
 
-        inMemoryPost.createPosts();
-        readInfoAboutEmployeesFromFile.readEmployeesFromFile(PATH);
+//        inMemoryPost.createPosts();
+//        readInfoAboutEmployeesFromFile.readEmployeesFromFile(PATH);
 ////        String PATH1= "C:\\Users\\nikit\\Desktop\\info.txt";
 ////        readInfoAboutEmployeesTxt.readEmployeesFromFile(PATH1);
 //
@@ -58,7 +58,7 @@ public class CommandLineRunnerEmployeesCards implements org.springframework.boot
 //
 //        employeeController.remove(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d9"));
 //        System.out.println(employeeController.getById(UUID.fromString("762d15a5-3bc9-43ef-ae96-02a680a557d9")));
-        inMemoryEmployeeCard.printSortedByFirstAndLastName();
+//        inMemoryEmployeeCard.printSortedByFirstAndLastName();
 
     }
 }

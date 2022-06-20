@@ -10,6 +10,7 @@ import whitesoftapp.whitesoftapp.model.Post;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -26,9 +27,9 @@ public class CreateEmployeeDto {
     @NotNull
     private List<String> characteristics;
     @NotNull
-    private Post post;
+    private UUID postId;
     @NotNull
-    private Contacts contacts;
+    private UUID contactsId;
     @NotNull
     private JobType jobType;
 
