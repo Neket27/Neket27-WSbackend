@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.controller;
+package whitesoftapp.whitesoftapp.controller.employee;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -7,10 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import whitesoftapp.whitesoftapp.action.CreateEmployeeArgumentAction;
 import whitesoftapp.whitesoftapp.action.UpdateEmployeeArgumentAction;
-import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.response.ResponseDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
-import whitesoftapp.whitesoftapp.service.EmployeeService;
+import whitesoftapp.whitesoftapp.service.employee.EmployeeService;
 
 import javax.validation.Valid;
 import java.util.UUID;
@@ -25,37 +26,25 @@ public class EmployeeController {
     private final UpdateEmployeeArgumentAction updateEmployeeArgumentAction;
 
     @ApiOperation("Создание нового работника Arg")
-    @PostMapping("/createArg")
+    @PostMapping("/create")
     public EmployeeDto create(@Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
         return employeeService.createEmployee(createEmployeeArgumentAction.create(createEmployeeDto));
     }
 
-    @ApiOperation("Создание нового работника")
-    @PostMapping("/create")
-    public EmployeeDto create(@Valid @RequestBody EmployeeDto employeeDto) {
-        return employeeService.createEmployee(employeeDto);
-    }
-
     @ApiOperation("Обновление информации сотрудника Arg")
-    @PostMapping(value="/updateArg/{id}", consumes={"application/json"})
-    public void update(@RequestParam UUID id, @RequestBody UpdateEmployeeDto updateEmployeeDto) {
+    @PostMapping(value = "/update/{id}")
+    public void update(@PathVariable UUID id, @RequestBody UpdateEmployeeDto updateEmployeeDto) {
         employeeService.updateEmployee(id, updateEmployeeArgumentAction.update(updateEmployeeDto));
     }
 
-    @ApiOperation("Обновление информации сотрудника")
-    @PostMapping("/update/{id}")
-    public void update(@RequestParam UUID id, @RequestBody EmployeeDto updateEmployeeDto) {
-        employeeService.updateEmployee(id, updateEmployeeDto);
-    }
-
     @ApiOperation("Получение сотрудника по id")
-    @GetMapping("/getById/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ResponseDto> getById(@PathVariable UUID id) {
         ResponseDto responseDTO = ResponseDto.builder()
                 .status(HttpStatus.OK.toString())
                 .body(employeeService.getById(id))
                 .build();
-         return ResponseEntity.ok(responseDTO);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @ApiOperation("Вывод списка сотрудников")

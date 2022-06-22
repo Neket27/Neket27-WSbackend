@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.utils.mapper;
+package whitesoftapp.whitesoftapp.controller.utils.mapper.post;
 
 import org.mapstruct.Mapper;
 import whitesoftapp.whitesoftapp.model.Post;
@@ -9,5 +9,5 @@ public interface PostMapper {
 
     PostDto toDto(Post post);
 
-    Post toPost(PostDto postDto);
+    Post toEntity(PostDto postDto);
 }

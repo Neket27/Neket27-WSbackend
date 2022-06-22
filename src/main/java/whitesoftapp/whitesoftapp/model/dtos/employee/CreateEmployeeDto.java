@@ -4,13 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.JobType;
-import whitesoftapp.whitesoftapp.model.Post;
+import whitesoftapp.whitesoftapp.model.dtos.contacts.ContactsDto;
+import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -27,9 +27,9 @@ public class CreateEmployeeDto {
     @NotNull
     private List<String> characteristics;
     @NotNull
-    private UUID postId;
+    private PostDto postDto;
     @NotNull
-    private UUID contactsId;
+    private ContactsDto contactsDto;
     @NotNull
     private JobType jobType;
 

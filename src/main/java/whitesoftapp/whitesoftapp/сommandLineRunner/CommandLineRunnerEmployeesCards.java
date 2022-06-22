@@ -3,12 +3,12 @@ package whitesoftapp.whitesoftapp.сommandLineRunner;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.ReadEmployeesByInfoFromFile;
-import whitesoftapp.whitesoftapp.controller.EmployeeController;
-import whitesoftapp.whitesoftapp.controller.PostController;
+import whitesoftapp.whitesoftapp.controller.employee.EmployeeController;
+import whitesoftapp.whitesoftapp.controller.post.PostController;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
-import whitesoftapp.whitesoftapp.service.EmployeeService;
-import whitesoftapp.whitesoftapp.service.PostService;
+import whitesoftapp.whitesoftapp.service.employee.EmployeeService;
+import whitesoftapp.whitesoftapp.service.post.PostService;
 
 @RequiredArgsConstructor
 @Component
@@ -18,7 +18,7 @@ public class CommandLineRunnerEmployeesCards implements org.springframework.boot
     private final PostService postService;
     private final InMemoryPost inMemoryPost;
     private final InMemoryEmployeeCard inMemoryEmployeeCard;
-    private final ReadEmployeesByInfoFromFile readInfoAboutEmployeesFromFile;
+    private final ReadEmployeesByInfoFromFile readEmployeesByInfoFromFile;
     private final EmployeeController employeeController;
     private final PostController postController;
 
@@ -33,7 +33,7 @@ public class CommandLineRunnerEmployeesCards implements org.springframework.boot
 
 
 //        inMemoryPost.createPosts();
-//        readInfoAboutEmployeesFromFile.readEmployeesFromFile(PATH);
+//        readEmployeesByInfoFromFile.readEmployeesFromFile(PATH);
 ////        String PATH1= "C:\\Users\\nikit\\Desktop\\info.txt";
 ////        readInfoAboutEmployeesTxt.readEmployeesFromFile(PATH1);
 //
@@ -52,7 +52,7 @@ public class CommandLineRunnerEmployeesCards implements org.springframework.boot
 //        postController.createPost(new PostDto(UUID.fromString("11111111-6c27-4635-926d-894d76a81707"), "Post_11111"));
 //        System.out.println(inMemoryPost.get(UUID.fromString("11111111-6c27-4635-926d-894d76a81707")));
 //
-////        System.out.println("list= " + employeeController.getList());
+//        System.out.println("list= " + employeeController.getList());
 //
 //
 //

@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.utils.mapper;
+package whitesoftapp.whitesoftapp.controller.utils.mapper.contacts;
 
 import org.mapstruct.Mapper;
 import whitesoftapp.whitesoftapp.model.Contacts;

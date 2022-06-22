@@ -1,11 +1,12 @@
-package whitesoftapp.whitesoftapp.service;
+package whitesoftapp.whitesoftapp.service.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import whitesoftapp.whitesoftapp.controller.utils.mapper.post.PostMapper;
 import whitesoftapp.whitesoftapp.model.Post;
 import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
-import whitesoftapp.whitesoftapp.utils.mapper.PostMapper;
+
 
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public class PostService {
     private final PostMapper postMapper;
 
     public PostDto createPost(PostDto postDto) {
-        Post post = postMapper.toPost(postDto);
+        Post post = postMapper.toEntity(postDto);
         inMemoryPost.add(post);
         return postDto;
     }

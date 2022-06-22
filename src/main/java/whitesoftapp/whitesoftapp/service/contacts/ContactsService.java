@@ -1,11 +1,11 @@
-package whitesoftapp.whitesoftapp.service;
+package whitesoftapp.whitesoftapp.service.contacts;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import whitesoftapp.whitesoftapp.controller.utils.mapper.contacts.ContactsMapper;
 import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.dtos.contacts.ContactsDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryContacts;
-import whitesoftapp.whitesoftapp.utils.mapper.ContactsMapper;
 
 import java.util.UUID;
 

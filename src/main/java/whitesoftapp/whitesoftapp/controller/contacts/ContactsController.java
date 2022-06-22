@@ -1,9 +1,9 @@
-package whitesoftapp.whitesoftapp.controller;
+package whitesoftapp.whitesoftapp.controller.contacts;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import whitesoftapp.whitesoftapp.model.dtos.contacts.ContactsDto;
-import whitesoftapp.whitesoftapp.service.ContactsService;
+import whitesoftapp.whitesoftapp.service.contacts.ContactsService;
 
 import javax.validation.Valid;
 import java.util.UUID;

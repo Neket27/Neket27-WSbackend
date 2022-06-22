@@ -5,16 +5,20 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import whitesoftapp.whitesoftapp.controller.employee.EmployeeController;
 import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.Employee;
 import whitesoftapp.whitesoftapp.model.JobType;
 import whitesoftapp.whitesoftapp.model.Post;
-import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.contacts.ContactsDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
+import whitesoftapp.whitesoftapp.model.dtos.response.ResponseDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
 
 import java.util.Collections;
@@ -37,14 +41,28 @@ class EmployeeControllerIT {
     Post post = new Post(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "newPost");
     PostDto postDto = new PostDto(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "newPost");
 
+    Contacts contacts =Contacts.builder()
+            .id(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .phone("89144033422")
+            .email("nikitaivanovitc@gmail.com")
+            .email("nikitaivanovitc@gmail.com")
+            .build();
+
+    ContactsDto contactsDto =ContactsDto.builder()
+            .id(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .phone("89144033422")
+            .email("nikitaivanovitc@gmail.com")
+            .email("nikitaivanovitc@gmail.com")
+            .build();
+
     EmployeeDto employeeDto = EmployeeDto.builder()
             .id(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
             .firstName("firstName")
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
-            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .postDto(postDto)
+            .contactsDto(contactsDto)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -55,7 +73,7 @@ class EmployeeControllerIT {
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
             .post(post)
-            .contacts(new Contacts())
+            .contacts(contacts)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -64,8 +82,8 @@ class EmployeeControllerIT {
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
-            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .postDto(postDto)
+            .contactsDto(contactsDto)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -101,8 +119,8 @@ class EmployeeControllerIT {
         Assertions.assertEquals(resultEmployeeDto.getLastName(), employeeDto.getLastName());
         Assertions.assertEquals(resultEmployeeDto.getDescription(), resultEmployeeDto.getDescription());
         Assertions.assertEquals(resultEmployeeDto.getCharacteristics(), employeeDto.getCharacteristics());
-        Assertions.assertEquals(resultEmployeeDto.getPostId(), employeeDto.getPostId());
-        Assertions.assertEquals(resultEmployeeDto.getContactsId(), employeeDto.getContactsId());
+        Assertions.assertEquals(resultEmployeeDto.getPostDto(), employeeDto.getPostDto());
+        Assertions.assertEquals(resultEmployeeDto.getContactsDto(), employeeDto.getContactsDto());
         Assertions.assertEquals(resultEmployeeDto.getJobType(), employeeDto.getJobType());
 
     }
@@ -126,8 +144,8 @@ class EmployeeControllerIT {
         Assertions.assertEquals(resultResponseDto.getLastName(), employeeDto.getLastName());
         Assertions.assertEquals(resultResponseDto.getDescription(), resultResponseDto.getDescription());
         Assertions.assertEquals(resultResponseDto.getCharacteristics(), employeeDto.getCharacteristics());
-        Assertions.assertEquals(resultResponseDto.getPostId(), employeeDto.getPostId());
-        Assertions.assertEquals(resultResponseDto.getContactsId(), employeeDto.getContactsId());
+        Assertions.assertEquals(resultResponseDto.getPostDto(), employeeDto.getPostDto());
+        Assertions.assertEquals(resultResponseDto.getContactsDto(), employeeDto.getContactsDto());
         Assertions.assertEquals(resultResponseDto.getJobType(), employeeDto.getJobType());
     }
 
@@ -140,20 +158,17 @@ class EmployeeControllerIT {
                 .body(employeeDto)
                 .build();
 
-        ResponseDto resultResponseDTO = webClient.get().uri("/employees/getById/{id}", "854ef89d-6c27-4635-926d-894d76a81707")
+        ResponseDto<EmployeeDto> resultResponseDTO = webClient.get().uri("/employees/{id}", "854ef89d-6c27-4635-926d-894d76a81707")
                 .exchange()
                 //Act
                 .expectStatus()
                 .isOk()
-                .expectBody(ResponseDto.class)
+                .expectBody(new ParameterizedTypeReference<ResponseDto<EmployeeDto>>() {
+                })
                 .returnResult()
                 .getResponseBody();
 
         //Assert
-
-        //Теряется тип данных у body
-        // Expected :ResponseDto(status=200 OK, message=Success!, body={id=854ef89d-6c27-4635-926d-894d76a81707, firstName=firstName, lastName=LastName, description=descriptions, characteristics=[characteristics], post={id=854ef89d-6c27-4635-926d-894d76a81707, name=newPo ...
-        // Actual   :ResponseDto(status=200 OK, message=Success!, body=EmployeeDto(id=854ef89d-6c27-4635-926d-894d76a81707, firstName=firstName, lastName=LastName, description=descriptions, characteristics=[characteristics], post=Post(id=854ef89d-6c27-4635-926d-894d76a81 ...
         Assertions.assertEquals(resultResponseDTO, responseDTO);
     }
 
@@ -172,9 +187,8 @@ class EmployeeControllerIT {
                 .returnResult()
                 .getResponseBody();
 
-
+        //Assert
         Assertions.assertNotEquals(resultEmployee, null);
-
     }
 
     @Test
@@ -209,15 +223,15 @@ class EmployeeControllerIT {
         Assertions.assertEquals(resultEmployeeDto.getLastName(), employeeDto.getLastName());
         Assertions.assertEquals(resultEmployeeDto.getDescription(), employee.getDescription());
         Assertions.assertEquals(resultEmployeeDto.getCharacteristics(), employeeDto.getCharacteristics());
-        Assertions.assertEquals(resultEmployeeDto.getPostId(), employeeDto.getPostId());
-        Assertions.assertEquals(resultEmployeeDto.getContactsId(), employeeDto.getContactsId());
+        Assertions.assertEquals(resultEmployeeDto.getPostDto(), employeeDto.getPostDto());
+        Assertions.assertEquals(resultEmployeeDto.getContactsDto(), employeeDto.getContactsDto());
         Assertions.assertEquals(resultEmployeeDto.getJobType(), employeeDto.getJobType());
     }
 
     @Test
     void updateArg() {
         EmployeeDto resultEmployeeDto = webClient.post()
-                .uri("/employees/updateArg/{id}","854ef89d-6c27-4635-926d-894d76a81707")
+                .uri("/employees/update/{id}", "854ef89d-6c27-4635-926d-894d76a81707")
                 .bodyValue(updateEmployeeDto)
                 .exchange()
                 //Act

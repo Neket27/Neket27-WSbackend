@@ -17,7 +17,6 @@ import java.util.UUID;
 @Builder
 public class UpdateEmployeeDto {
 
-    @JsonProperty("postId")
     private UUID id;
     @NotBlank
     private String firstName;

@@ -1,19 +1,16 @@
-package whitesoftapp.whitesoftapp.service;
+package whitesoftapp.whitesoftapp.service.employee;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import whitesoftapp.whitesoftapp.argument.CreateEmployeeArgument;
-import whitesoftapp.whitesoftapp.argument.UpdateEmployeeArgument;
+import whitesoftapp.whitesoftapp.arguments.CreateEmployeeArgument;
+import whitesoftapp.whitesoftapp.arguments.UpdateEmployeeArgument;
+import whitesoftapp.whitesoftapp.controller.utils.mapper.employee.EmployeeMapper;
 import whitesoftapp.whitesoftapp.exception.ApiRequestExceptionEmployee;
 import whitesoftapp.whitesoftapp.model.Employee;
 import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
-import whitesoftapp.whitesoftapp.repository.InMemoryContacts;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
-import whitesoftapp.whitesoftapp.repository.InMemoryPost;
-import whitesoftapp.whitesoftapp.utils.mapper.EmployeeMapper;
-import whitesoftapp.whitesoftapp.utils.mapper.EmployeeMapperBuilder;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -24,41 +21,30 @@ public class EmployeeService {
 
     private final InMemoryEmployeeCard inMemoryEmployeeCard;
     private final EmployeeMapper employeeMapper;
-    private final EmployeeMapperBuilder employeeMapperBuilder;
 
 
     public EmployeeDto createEmployee(CreateEmployeeArgument createEmployeeArgument) {
-        Employee employee = employeeMapperBuilder.toEntity(createEmployeeArgument);
+        Employee employee = employeeMapper.toEntityFromUpdateArgument(createEmployeeArgument);
+        System.out.println("EMP="+employee);
         inMemoryEmployeeCard.add(employee);
-        return employeeMapperBuilder.toDto(employee);
-    }
-
-    public EmployeeDto createEmployee(EmployeeDto employeeDto) {
-        Employee employee = employeeMapperBuilder.toEntity(employeeDto);
-        inMemoryEmployeeCard.add(employee);
-        return employeeMapperBuilder.toDto(employee);
+        return employeeMapper.toDto(employee);
     }
 
     public void updateEmployee(UUID id, UpdateEmployeeArgument updateEmployeeArgument) {
-        Employee employee = employeeMapperBuilder.toEntity(updateEmployeeArgument);
+        Employee employee = employeeMapper.toEntityFromUpdateArgument(updateEmployeeArgument);
         inMemoryEmployeeCard.put(id, employee);
     }
 
-    public void updateEmployee(UUID id, EmployeeDto employeeDto) {
-        Employee employee = employeeMapperBuilder.toEntity(employeeDto);
-        inMemoryEmployeeCard.put(id, employee);
-    }
-
-    public EmployeeDto getById(UUID id) {
+      public EmployeeDto getById(UUID id) {
         Employee employee = inMemoryEmployeeCard.get(id);
         if (employee == null)
             throw new ApiRequestExceptionEmployee("Нет Работника с таким id");
 
-        return employeeMapperBuilder.toDto(employee);
+        return employeeMapper.toDto(employee);
     }
 
     public HashMap<UUID, EmployeeDto> getList() {
-        return employeeMapper.toListEmployeeDto(inMemoryEmployeeCard.getList());
+        return employeeMapper.toListDto(inMemoryEmployeeCard.getList());
     }
 
     public void remove(UUID id) {
@@ -67,11 +53,11 @@ public class EmployeeService {
 
 
     public CreateEmployeeArgument convertToCreateEmployeeArgument(CreateEmployeeDto createEmployeeDto) {
-        return employeeMapper.toArgument(createEmployeeDto);
+        return employeeMapper.toArgumentFromUpdateEmployeeDto(createEmployeeDto);
     }
 
     public UpdateEmployeeArgument convertToUpdateEmployeeArgument(UpdateEmployeeDto updateEmployeeDto) {
-        return employeeMapper.toArgument(updateEmployeeDto);
+        return employeeMapper.toArgumentFromUpdateEmployeeDto(updateEmployeeDto);
     }
 
 }

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import whitesoftapp.whitesoftapp.model.JobType;
-import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryPost;
 
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class ParsInfoEmployeeFromTxt {
 
     private final InMemoryPost inMemoryPost;
 
-    public EmployeeDto dataEmployee(String dataEmployee) throws Exception {
+    public CreateEmployeeDto dataEmployee(String dataEmployee) throws Exception {
         Matcher m = employeesFilePattern.matcher(dataEmployee);
         if (!m.find())
             throw new Exception("File data is incorrect: " + dataEmployee);
@@ -39,17 +39,15 @@ public class ParsInfoEmployeeFromTxt {
         if ((m.group("firstName").isEmpty()) || (m.group("lastName").isEmpty()) || characteristics.isEmpty() || inMemoryPost.get(UUID.fromString(m.group("postId"))) == null)
             throw new Exception("fill in the fields(the description may be empty)");
 
-        EmployeeDto employeeDto = EmployeeDto.builder()
+        return CreateEmployeeDto.builder()
                 .firstName(m.group("firstName"))
                 .lastName(m.group("firstName"))
                 .description(m.group("description"))
                 .characteristics(characteristics)
-                .postId(UUID.fromString(m.group("postId")))
-                .contactsId(UUID.fromString(m.group("contacts")))
-                .jobType(JobType.valueOf(m.group("contacts")))
+                .postDto(null)
+                .contactsDto(null)
+                .jobType(JobType.valueOf(m.group("jobType")))
                 .build();
-
-        return employeeDto;
     }
 
 }

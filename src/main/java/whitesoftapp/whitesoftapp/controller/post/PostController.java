@@ -1,9 +1,9 @@
-package whitesoftapp.whitesoftapp.controller;
+package whitesoftapp.whitesoftapp.controller.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
-import whitesoftapp.whitesoftapp.service.PostService;
+import whitesoftapp.whitesoftapp.service.post.PostService;
 
 import javax.validation.Valid;
 import java.util.UUID;

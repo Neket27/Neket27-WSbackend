@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.controller;
+package whitesoftapp.whitesoftapp.model.dtos.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

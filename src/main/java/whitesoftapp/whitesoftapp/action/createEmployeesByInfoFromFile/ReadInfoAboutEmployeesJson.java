@@ -6,9 +6,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import whitesoftapp.whitesoftapp.controller.EmployeeController;
-import whitesoftapp.whitesoftapp.model.Employee;
-import whitesoftapp.whitesoftapp.action.createEmployeesByInfoFromFile.parser.ParsInfoEmployeeFromJson;
+import whitesoftapp.whitesoftapp.controller.employee.EmployeeController;
+import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,14 +23,14 @@ import java.util.stream.Collectors;
 public class ReadInfoAboutEmployeesJson implements ReadEmployeesByInfoFromFile {
 
     private final EmployeeController employeeController;
-    private final ParsInfoEmployeeFromJson parsInfoEmployeeFromJson;
     private final ObjectMapper objectMapper;
 
     @Override
     public List<String> readEmployeesFromFile(String PATH) throws IOException {
-        List<Employee> listEmployees = objectMapper.readValue(new File(PATH), new TypeReference<List<Employee>>() {});
-        listEmployees.forEach(employee -> employeeController.create(parsInfoEmployeeFromJson.dataEmployee(employee)));
+        List<CreateEmployeeDto> listEmployees = objectMapper.readValue(new File(PATH), new TypeReference<List<CreateEmployeeDto>>() {});
+        listEmployees.forEach(employeeController::create);
         return Files.lines(Paths.get(PATH)).collect(Collectors.toList());
     }
 
 }
+

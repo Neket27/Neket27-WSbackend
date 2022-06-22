@@ -11,7 +11,9 @@
     "lastName": "Ivanov",
     "description": "",
     "characteristics": ["resourceful", "reliable","active"],
-    "postId": "762d15a5-3bc9-43ef-ae96-02a680a557d0"
+    "postId": "762d15a5-3bc9-43ef-ae96-02a680a557d0",
+    "contactsId": "762d15a5-3bc9-43ef-ae96-02a680a557d0",
+    "jobType": "FULL_TIME"
   },
   {
     "firstName": "Nikita",

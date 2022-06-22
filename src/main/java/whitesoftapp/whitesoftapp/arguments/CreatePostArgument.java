@@ -1,4 +1,4 @@
-package whitesoftapp.whitesoftapp.argument;
+package whitesoftapp.whitesoftapp.arguments;
 
 import lombok.Builder;
 import lombok.Data;

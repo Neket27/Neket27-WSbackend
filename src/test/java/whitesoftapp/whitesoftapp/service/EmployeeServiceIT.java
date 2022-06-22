@@ -4,15 +4,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import whitesoftapp.whitesoftapp.action.CreateEmployeeArgumentAction;
-import whitesoftapp.whitesoftapp.argument.CreateEmployeeArgument;
-import whitesoftapp.whitesoftapp.argument.UpdateEmployeeArgument;
+import whitesoftapp.whitesoftapp.arguments.CreateEmployeeArgument;
+import whitesoftapp.whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.whitesoftapp.model.Contacts;
 import whitesoftapp.whitesoftapp.model.Employee;
 import whitesoftapp.whitesoftapp.model.JobType;
 import whitesoftapp.whitesoftapp.model.Post;
-import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.contacts.ContactsDto;
 import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
+import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
 import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
+import whitesoftapp.whitesoftapp.service.employee.EmployeeService;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,6 +34,22 @@ class EmployeeServiceIT {
     private CreateEmployeeArgumentAction createEmployeeArgumentAction;
 
     Post post = new Post(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "newPost");
+    PostDto postDto = new PostDto(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "newPost");
+
+
+    Contacts contacts = Contacts.builder()
+            .id(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .phone("89144033422")
+            .email("nikitaivanovitc@gmail.com")
+            .email("nikitaivanovitc@gmail.com")
+            .build();
+
+    ContactsDto contactsDto = ContactsDto.builder()
+            .id(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .phone("89144033422")
+            .email("nikitaivanovitc@gmail.com")
+            .email("nikitaivanovitc@gmail.com")
+            .build();
 
     Employee employee = Employee.builder()
             .id(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
@@ -39,7 +58,7 @@ class EmployeeServiceIT {
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
             .post(post)
-            .contacts(new Contacts())
+            .contacts(contacts)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -49,8 +68,8 @@ class EmployeeServiceIT {
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
-            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .postDto(postDto)
+            .contactsDto(contactsDto)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -59,8 +78,8 @@ class EmployeeServiceIT {
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
-            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .postDto(postDto)
+            .contactsDto(contactsDto)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -69,8 +88,8 @@ class EmployeeServiceIT {
             .lastName(employee.getLastName())
             .description(employee.getDescription())
             .characteristics(employee.getCharacteristics())
-            .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
-            .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+            .postDto(postDto)
+            .contactsDto(contactsDto)
             .jobType(employee.getJobType())
             .build();
 
@@ -80,20 +99,10 @@ class EmployeeServiceIT {
             .lastName(employee.getLastName())
             .description(employee.getDescription())
             .characteristics(employee.getCharacteristics())
-            .postId(employee.getPost().getId())
-            .contactsId(employee.getContacts().getId())
+            .postDto(postDto)
+            .contactsDto(contactsDto)
             .jobType(employee.getJobType())
             .build();
-
-    @Test
-    void createEmployee() {
-        //Act
-        employeeService.createEmployee(employeeDto);
-        Employee employeeResult =inMemoryEmployeeCard.get(employee.getId());
-        //Assert
-        assertThat(employeeResult).isEqualTo(employee);
-
-    }
 
     @Test
     void CreateEmployeeArgument() {
@@ -103,25 +112,15 @@ class EmployeeServiceIT {
                 .lastName(employee.getLastName())
                 .description(employee.getDescription())
                 .characteristics(employee.getCharacteristics())
-                .postId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
-                .contactsId(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"))
+                .postDto(postDto)
+                .contactsDto(contactsDto)
                 .jobType(employee.getJobType())
                 .build();
 
         //Act
         employeeService.createEmployee(createEmployeeArgument);
-        Employee employeeResult=inMemoryEmployeeCard.get(employee.getId());
+        Employee employeeResult = inMemoryEmployeeCard.get(employee.getId());
 
-        //Assert
-        assertThat(employeeResult).isEqualTo(employee);
-    }
-
-    @Test
-    void updateEmployee() {
-
-        //Act
-        employeeService.updateEmployee(employee.getId(), employeeDto);
-        Employee employeeResult=inMemoryEmployeeCard.get(employee.getId());
         //Assert
         assertThat(employeeResult).isEqualTo(employee);
     }
@@ -132,7 +131,7 @@ class EmployeeServiceIT {
 
         //Act
         employeeService.updateEmployee(updateEmployee.getId(), updateEmployee);
-        Employee employeeResult=inMemoryEmployeeCard.get(updateEmployee.getId());
+        Employee employeeResult = inMemoryEmployeeCard.get(updateEmployee.getId());
         //Assert
         assertThat(employeeResult).isEqualTo(employee);
     }
@@ -171,7 +170,7 @@ class EmployeeServiceIT {
 
         //Act
         employeeService.remove(employee.getId());
-        Employee employeeResult= inMemoryEmployeeCard.get(employee.getId());
+        Employee employeeResult = inMemoryEmployeeCard.get(employee.getId());
 
         //Assert
         assertThat(employeeResult).isEqualTo(null);

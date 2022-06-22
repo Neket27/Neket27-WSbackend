@@ -2,9 +2,9 @@ package whitesoftapp.whitesoftapp.action;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import whitesoftapp.whitesoftapp.argument.UpdateEmployeeArgument;
+import whitesoftapp.whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
-import whitesoftapp.whitesoftapp.service.EmployeeService;
+import whitesoftapp.whitesoftapp.service.employee.EmployeeService;
 
 @RequiredArgsConstructor
 @Component
