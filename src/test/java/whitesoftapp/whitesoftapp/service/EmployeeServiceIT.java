@@ -1,27 +1,28 @@
 package whitesoftapp.whitesoftapp.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import whitesoftapp.whitesoftapp.action.CreateEmployeeArgumentAction;
-import whitesoftapp.whitesoftapp.arguments.CreateEmployeeArgument;
-import whitesoftapp.whitesoftapp.arguments.UpdateEmployeeArgument;
-import whitesoftapp.whitesoftapp.model.Contacts;
-import whitesoftapp.whitesoftapp.model.Employee;
-import whitesoftapp.whitesoftapp.model.JobType;
-import whitesoftapp.whitesoftapp.model.Post;
-import whitesoftapp.whitesoftapp.model.dtos.contacts.ContactsDto;
-import whitesoftapp.whitesoftapp.model.dtos.employee.EmployeeDto;
-import whitesoftapp.whitesoftapp.model.dtos.employee.CreateEmployeeDto;
-import whitesoftapp.whitesoftapp.model.dtos.post.PostDto;
-import whitesoftapp.whitesoftapp.repository.InMemoryEmployeeCard;
-import whitesoftapp.whitesoftapp.service.employee.EmployeeService;
+import whitesoftapp.action.CreateEmployeeArgumentAction;
+import whitesoftapp.arguments.CreateEmployeeArgument;
+import whitesoftapp.arguments.UpdateEmployeeArgument;
+import whitesoftapp.model.Contacts;
+import whitesoftapp.model.Employee;
+import whitesoftapp.model.JobType;
+import whitesoftapp.model.Post;
+import whitesoftapp.model.dtos.contacts.ContactsDto;
+import whitesoftapp.model.dtos.employee.CreateEmployeeDto;
+import whitesoftapp.model.dtos.employee.EmployeeDto;
+import whitesoftapp.model.dtos.post.PostDto;
+import whitesoftapp.repository.InMemoryEmployeeCard;
+import whitesoftapp.service.employee.EmployeeService;
+
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.UUID;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 class EmployeeServiceIT {
@@ -68,8 +69,8 @@ class EmployeeServiceIT {
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .postDto(postDto)
-            .contactsDto(contactsDto)
+            .post(postDto)
+            .contacts(contactsDto)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -78,8 +79,8 @@ class EmployeeServiceIT {
             .lastName("LastName")
             .description("descriptions")
             .characteristics(Collections.singletonList("characteristics"))
-            .postDto(postDto)
-            .contactsDto(contactsDto)
+            .post(postDto)
+            .contacts(contactsDto)
             .jobType(JobType.CONTRACT)
             .build();
 
@@ -88,8 +89,8 @@ class EmployeeServiceIT {
             .lastName(employee.getLastName())
             .description(employee.getDescription())
             .characteristics(employee.getCharacteristics())
-            .postDto(postDto)
-            .contactsDto(contactsDto)
+            .post(postDto)
+            .contacts(contactsDto)
             .jobType(employee.getJobType())
             .build();
 
@@ -99,8 +100,8 @@ class EmployeeServiceIT {
             .lastName(employee.getLastName())
             .description(employee.getDescription())
             .characteristics(employee.getCharacteristics())
-            .postDto(postDto)
-            .contactsDto(contactsDto)
+            .post(postDto)
+            .contacts(contactsDto)
             .jobType(employee.getJobType())
             .build();
 
@@ -112,17 +113,19 @@ class EmployeeServiceIT {
                 .lastName(employee.getLastName())
                 .description(employee.getDescription())
                 .characteristics(employee.getCharacteristics())
-                .postDto(postDto)
-                .contactsDto(contactsDto)
+                .post(postDto)
+                .contacts(contactsDto)
                 .jobType(employee.getJobType())
                 .build();
 
         //Act
         employeeService.createEmployee(createEmployeeArgument);
-        Employee employeeResult = inMemoryEmployeeCard.get(employee.getId());
+        Optional<UUID> pk = inMemoryEmployeeCard.getList().keySet().stream().findFirst();
+        employee.setId(pk.get());
+        Employee employeeResult = inMemoryEmployeeCard.get(pk.get());
 
         //Assert
-        assertThat(employeeResult).isEqualTo(employee);
+        Assertions.assertEquals(employeeResult, employee);
     }
 
     @Test
@@ -133,7 +136,7 @@ class EmployeeServiceIT {
         employeeService.updateEmployee(updateEmployee.getId(), updateEmployee);
         Employee employeeResult = inMemoryEmployeeCard.get(updateEmployee.getId());
         //Assert
-        assertThat(employeeResult).isEqualTo(employee);
+        Assertions.assertEquals(employeeResult, employee);
     }
 
     @Test
@@ -142,10 +145,10 @@ class EmployeeServiceIT {
         inMemoryEmployeeCard.put(employee.getId(), employee);
 
         //Act
-        EmployeeDto employee = employeeService.getById(employeeDto.getId());
+        Employee employee = employeeService.getById(employeeDto.getId());
 
         //Assert
-        assertThat(employeeDto).isEqualTo(employee);
+        Assertions.assertEquals(employee, employee);
     }
 
     @Test
@@ -154,13 +157,13 @@ class EmployeeServiceIT {
         inMemoryEmployeeCard.getList().clear();
         inMemoryEmployeeCard.put(employee.getId(), employee);
         HashMap storage = new HashMap();
-        storage.put(employeeDto.getId(), employeeDto);
+        storage.put(employee.getId(), employee);
 
         //Act
-        HashMap<UUID, EmployeeDto> employeesResult = employeeService.getList();
+        HashMap<UUID, Employee> employeesResult = employeeService.getList();
 
         //Assert
-        assertThat(employeesResult).isEqualTo(storage);
+        Assertions.assertEquals(employeesResult, storage);
     }
 
     @Test
@@ -173,15 +176,6 @@ class EmployeeServiceIT {
         Employee employeeResult = inMemoryEmployeeCard.get(employee.getId());
 
         //Assert
-        assertThat(employeeResult).isEqualTo(null);
-    }
-
-    @Test
-    void convertToCreateEmployeeArgument() {
-        //Act
-        CreateEmployeeArgument argument = employeeService.convertToCreateEmployeeArgument(createEmployeeDto);
-
-        //Assert
-        assertThat(argument).isEqualTo(createEmployeeArgument).isEqualTo(argument);
+        Assertions.assertEquals(employeeResult, null);
     }
 }
