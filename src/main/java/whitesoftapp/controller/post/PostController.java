@@ -20,13 +20,13 @@ public class PostController {
     private final CreatePostArgumentAction createPostArgumentAction;
     private final PostMapper postMapper;
 
-    @PostMapping("/createPost")
+    @PostMapping("/create")
     public PostDto createPost(@Valid @RequestBody CreatePostDto createPostDto) {
-        return postMapper.toDto(postService.createPost(createPostArgumentAction.create(createPostDto)));
+        return postMapper.toDto(postService.create(createPostArgumentAction.create(createPostDto)));
     }
 
-    @GetMapping("/getPost/{id}")
-    public PostDto getById(@PathVariable UUID id) throws Exception {
+    @GetMapping("/{id}")
+    public PostDto getById(@PathVariable UUID id) {
         return postMapper.toDto(postService.getById(id));
     }
 }

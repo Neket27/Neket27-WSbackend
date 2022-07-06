@@ -42,8 +42,8 @@ public class Employee {
     @NotNull(message = "Post is mandatory")
     private Post post;
 
-    @ManyToOne
     @NotNull(message = "Contacts are mandatory")
+    @Embedded
     private Contacts contacts;
 
     @NotNull

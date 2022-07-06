@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import whitesoftapp.arguments.CreateContactsArgument;
 import whitesoftapp.controller.utils.mapper.contacts.ContactsMapper;
 import whitesoftapp.model.Contacts;
-import whitesoftapp.model.dtos.contacts.ContactsDto;
 import whitesoftapp.repository.InMemoryContacts;
 
 import java.util.UUID;

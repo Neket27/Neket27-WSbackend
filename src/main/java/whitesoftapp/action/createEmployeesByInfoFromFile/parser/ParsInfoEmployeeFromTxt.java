@@ -44,7 +44,7 @@ public class ParsInfoEmployeeFromTxt {
                 .lastName(m.group("firstName"))
                 .description(m.group("description"))
                 .characteristics(characteristics)
-                .post(null)
+                .postId(null)
                 .contacts(null)
                 .jobType(JobType.valueOf(m.group("jobType")))
                 .build();

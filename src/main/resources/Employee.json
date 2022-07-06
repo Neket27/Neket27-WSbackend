@@ -1,19 +1,19 @@
-  {
-    "characteristics": [
-      "string"
-    ],
-    "contacts": {
-      "email": "string",
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "phone": "string",
-      "workEmail": "string"
-    },
-    "description": "string",
-    "firstName": "string",
-    "jobType": "CONTRACT",
-    "lastName": "string",
-    "post": {
-      "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-      "name": "string"
-    }
-  }
+{
+  "id": "895addd6-93de-439b-abf4-aa5a335018c2",
+  "firstName": "string",
+  "lastName": "string",
+  "description": "string",
+  "characteristics": [
+    "string"
+  ],
+  "post": {
+    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "name": "string"
+  },
+  "contacts": {
+    "phone": "string",
+    "email": "string",
+    "workEmail": "string"
+  },
+  "jobType": "CONTRACT"
+}

@@ -5,11 +5,8 @@ import org.springframework.stereotype.Service;
 import whitesoftapp.arguments.CreateEmployeeArgument;
 import whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.controller.utils.mapper.employee.EmployeeMapper;
-import whitesoftapp.exception.ApiRequestExceptionEmployee;
+import whitesoftapp.exception.employee.ErrorEmployee;
 import whitesoftapp.model.Employee;
-import whitesoftapp.model.dtos.employee.CreateEmployeeDto;
-import whitesoftapp.model.dtos.employee.EmployeeDto;
-import whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 import whitesoftapp.repository.InMemoryEmployeeCard;
 
 import java.util.*;
@@ -21,13 +18,13 @@ public class EmployeeService {
     private final InMemoryEmployeeCard inMemoryEmployeeCard;
     private final EmployeeMapper employeeMapper;
 
-    public Employee createEmployee(CreateEmployeeArgument createEmployeeArgument) {
+    public Employee create(CreateEmployeeArgument createEmployeeArgument) {
         Employee employee = employeeMapper.toEntityFromUpdateArgument(createEmployeeArgument);
         inMemoryEmployeeCard.add(employee);
         return employee;
     }
 
-    public Employee updateEmployee(UUID id, UpdateEmployeeArgument updateEmployeeArgument) {
+    public Employee update(UUID id, UpdateEmployeeArgument updateEmployeeArgument) {
         Employee employee = employeeMapper.toEntityFromUpdateArgument(updateEmployeeArgument);
         inMemoryEmployeeCard.put(id, employee);
         return employee;
@@ -36,7 +33,7 @@ public class EmployeeService {
       public Employee getById(UUID id) {
         Employee employee = inMemoryEmployeeCard.get(id);
         if (employee == null)
-            throw new ApiRequestExceptionEmployee("Нет Работника с таким id");
+            throw new ErrorEmployee("Нет Работника с таким id");
 
         return employee;
     }

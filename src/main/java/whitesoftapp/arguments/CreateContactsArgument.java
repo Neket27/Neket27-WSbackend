@@ -1,15 +1,12 @@
 package whitesoftapp.arguments;
 
-import lombok.Builder;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.validation.constraints.NotBlank;
 
-@Builder
 public class CreateContactsArgument {
-    @Id
-    private UUID id;
+    @NotBlank
     private String phone;
+    @NotBlank
     private String email;
+    @NotBlank
     private String workEmail;
-
 }

@@ -3,6 +3,7 @@ package whitesoftapp.model;
 import lombok.*;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
@@ -14,11 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
+@Embeddable
 public class Contacts {
-
-    @Id
-    private UUID id;
     @NotBlank
     private String phone;
     @NotBlank

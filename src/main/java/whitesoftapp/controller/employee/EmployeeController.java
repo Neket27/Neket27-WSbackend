@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import whitesoftapp.action.CreateEmployeeArgumentAction;
 import whitesoftapp.action.UpdateEmployeeArgumentAction;
+import whitesoftapp.arguments.CreateEmployeeArgument;
+import whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.controller.utils.mapper.employee.EmployeeMapper;
 import whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.model.dtos.employee.EmployeeDto;
@@ -25,22 +27,25 @@ public class EmployeeController {
     private final UpdateEmployeeArgumentAction updateEmployeeArgumentAction;
     private final EmployeeMapper employeeMapper;
 
-    @ApiOperation("Создание нового работника Arg")
+    @ApiOperation("Создание нового работника")
     @PostMapping("/create")
     public EmployeeDto create(@Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
-        return employeeMapper.toDto(employeeService.createEmployee(createEmployeeArgumentAction.create(createEmployeeDto)));
+        CreateEmployeeArgument createEmployeeArgument = createEmployeeArgumentAction.create(createEmployeeDto);
+
+        return employeeMapper.toDto(employeeService.create(createEmployeeArgument));
     }
 
-    @ApiOperation("Обновление информации сотрудника Arg")
+    @ApiOperation("Обновление информации сотрудника")
     @PostMapping(value = "/update/{id}")
     public EmployeeDto update(@PathVariable UUID id, @RequestBody UpdateEmployeeDto updateEmployeeDto) {
-        System.out.println("updateEmployeeArgumentAction.update(updateEmployeeDto)= " + updateEmployeeArgumentAction.update(updateEmployeeDto));
-        return employeeMapper.toDto(employeeService.updateEmployee(id, updateEmployeeArgumentAction.update(updateEmployeeDto)));
+        UpdateEmployeeArgument updateEmployeeArgumen=updateEmployeeArgumentAction.update(updateEmployeeDto);
+        return employeeMapper.toDto(employeeService.update(id,updateEmployeeArgumen));
     }
 
     @ApiOperation("Получение сотрудника по id")
     @GetMapping("/{id}")
-    public EmployeeDto getById(@PathVariable UUID id) {
+    public EmployeeDto getById(@PathVariable UUID id)  {
+
         return employeeMapper.toDto(employeeService.getById(id));
     }
 

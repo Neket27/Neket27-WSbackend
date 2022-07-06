@@ -13,7 +13,7 @@ public interface ContactsMapper {
 
     Contacts toEntity(ContactsDto contactsDto);
 
-    CreateContactsArgument convertToCreateContactsArgument(CreateContactsDto createPostDto);
+    CreateContactsArgument toCreateContactsArgument(CreateContactsDto createPostDto);
 
     Contacts toEntityFromCreateContactsArgument(CreateContactsArgument createContactsArgument);
 }

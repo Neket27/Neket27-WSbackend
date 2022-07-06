@@ -1,4 +1,4 @@
-package whitesoftapp.exception;
+package whitesoftapp.exception.post;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ApiExceptionHandlerEmployee {
+public class ApiExceptionHandlerPost {
 
-    @ExceptionHandler(value = {ApiRequestExceptionEmployee.class})
-    public ResponseEntity<Object> handleApiRequestException(ApiRequestExceptionEmployee e) {
+    @ExceptionHandler(value = {ErrorPost.class})
+    public ResponseEntity<Object> handleApiRequestException(ErrorPost e) {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-        ApiExceptionEmployee apiException = new ApiExceptionEmployee(e.getMessage(), httpStatus);
+        ApiExceptionPost apiException = new ApiExceptionPost(e.getMessage(), httpStatus);
         return new ResponseEntity<>(apiException, httpStatus);
     }
 }

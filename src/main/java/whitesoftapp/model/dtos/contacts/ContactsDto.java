@@ -11,7 +11,6 @@ import java.util.UUID;
 @Data
 @Builder
 public class ContactsDto {
-    private UUID id;
     private String phone;
     private String email;
     private String workEmail;
