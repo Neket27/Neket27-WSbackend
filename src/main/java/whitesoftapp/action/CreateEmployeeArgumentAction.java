@@ -25,8 +25,6 @@ public class CreateEmployeeArgumentAction {
 
     public CreateEmployeeArgument create(@Valid CreateEmployeeDto createEmployeeDto) {
         CreateEmployeeArgument createEmployeeArgument=employeeMapper.toArgumentFromCreateEmployeeDto(createEmployeeDto);
-        Post post=postService.getById(createEmployeeDto.getPostId());
-        createEmployeeArgument.setPost(postMapper.toDto(post));
         return createEmployeeArgument;
     }
 }

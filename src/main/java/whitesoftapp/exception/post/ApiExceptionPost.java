@@ -9,5 +9,4 @@ import org.springframework.http.HttpStatus;
 public class ApiExceptionPost {
 
     private final String massage;
-    private final HttpStatus httpStatus;
 }

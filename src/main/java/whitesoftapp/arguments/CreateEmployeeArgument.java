@@ -11,6 +11,7 @@ import whitesoftapp.model.dtos.post.PostDto;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class CreateEmployeeArgument {
     private List<String> characteristics;
 
     @NotNull(message = "Post is mandatory")
-    private PostDto post;
+    private UUID postId;
 
     @NotNull(message = "Contacts are mandatory")
     private ContactsDto contacts;

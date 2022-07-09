@@ -49,37 +49,25 @@ class EmployeeControllerIT {
     @BeforeEach
     private void setData() throws IOException {
 
-        createEmployeeDto = objectMapper.readValue(new File(Objects.requireNonNull(EmployeeControllerIT.class
-                                .getClassLoader()
-                                .getResource("Employee.json"))
-                        .getFile()),
-                CreateEmployeeDto.class);
+        createEmployeeDto = date("CreateEmployeeDto.json", CreateEmployeeDto.class);
+        employeeExpected = date("Employee.json", Employee.class);
+        expectedEmployeeDto = date("Employee.json", EmployeeDto.class);
+        expectedEmployeeDto = date("Employee.json", EmployeeDto.class);
+        updateEmployeeDto = date("Employee.json", UpdateEmployeeDto.class);
 
-        employeeExpected = objectMapper.readValue(new File(Objects.requireNonNull(EmployeeControllerIT.class
-                                .getClassLoader()
-                                .getResource("Employee.json"))
-                        .getFile()),
-                Employee.class);
-
-        expectedEmployeeDto = objectMapper.readValue(new File(Objects.requireNonNull(EmployeeControllerIT.class
-                                .getClassLoader()
-                                .getResource("Employee.json"))
-                        .getFile()),
-                EmployeeDto.class);
-
-        updateEmployeeDto = objectMapper.readValue(new File(Objects.requireNonNull(EmployeeControllerIT.class
-                                .getClassLoader()
-                                .getResource("Employee.json"))
-                        .getFile()),
-                UpdateEmployeeDto.class);
-
-        employeeExpected.setPost(new Post(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"),"string"));
-        expectedEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"),"string"));
-        updateEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"),"string"));
-        inMemoryEmployeeCard.put(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"),employeeExpected);
-
+        employeeExpected.setPost(new Post(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
+        expectedEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
+        updateEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
+        inMemoryEmployeeCard.put(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), employeeExpected);
     }
 
+    private <T> T date(String file, Class<T> fileClass) throws IOException {
+        return objectMapper.readValue(new File(Objects.requireNonNull(EmployeeControllerIT.class
+                                .getClassLoader()
+                                .getResource(file))
+                        .getFile()),
+                fileClass);
+    }
 
     @Test
     void create() {
@@ -104,7 +92,7 @@ class EmployeeControllerIT {
         Assertions.assertEquals(actual.getCharacteristics(), expectedEmployeeDto.getCharacteristics());
         Assertions.assertEquals(actual.getPost(), expectedEmployeeDto.getPost());
         Assertions.assertEquals(actual.getContacts(), expectedEmployeeDto.getContacts());
-        Assertions.assertEquals(actual.getJobType(), expectedEmployeeDto.getJobType());5
+        Assertions.assertEquals(actual.getJobType(), expectedEmployeeDto.getJobType());
 
     }
 

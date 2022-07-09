@@ -89,7 +89,7 @@ class EmployeeServiceIT {
             .lastName(employeeExpected.getLastName())
             .description(employeeExpected.getDescription())
             .characteristics(employeeExpected.getCharacteristics())
-            .post(postDto)
+            .postId(employeeExpected.getId())
             .contacts(contactsDto)
             .jobType(employeeExpected.getJobType())
             .build();
@@ -113,7 +113,7 @@ class EmployeeServiceIT {
                 .lastName(employeeExpected.getLastName())
                 .description(employeeExpected.getDescription())
                 .characteristics(employeeExpected.getCharacteristics())
-                .post(postDto)
+                .postId(employeeExpected.getId())
                 .contacts(contactsDto)
                 .jobType(employeeExpected.getJobType())
                 .build();

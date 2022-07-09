@@ -7,7 +7,9 @@ import whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.controller.utils.mapper.employee.EmployeeMapper;
 import whitesoftapp.exception.employee.ErrorEmployee;
 import whitesoftapp.model.Employee;
+import whitesoftapp.model.Post;
 import whitesoftapp.repository.InMemoryEmployeeCard;
+import whitesoftapp.service.post.PostService;
 
 import java.util.*;
 
@@ -17,9 +19,12 @@ public class EmployeeService {
 
     private final InMemoryEmployeeCard inMemoryEmployeeCard;
     private final EmployeeMapper employeeMapper;
+    private final PostService postService;
 
     public Employee create(CreateEmployeeArgument createEmployeeArgument) {
         Employee employee = employeeMapper.toEntityFromUpdateArgument(createEmployeeArgument);
+        Post post=postService.getById(createEmployeeArgument.getPostId());
+        employee.setPost(post);
         inMemoryEmployeeCard.add(employee);
         return employee;
     }
