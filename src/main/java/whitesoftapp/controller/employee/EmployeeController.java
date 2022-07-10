@@ -14,7 +14,8 @@ import whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 import whitesoftapp.service.employee.EmployeeService;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -51,8 +52,8 @@ public class EmployeeController {
 
     @ApiOperation("Вывод списка сотрудников")
     @GetMapping("/list")
-    public HashMap<UUID, EmployeeDto> getList() {
-        return employeeMapper.toListDto(employeeService.getList());
+    public List<EmployeeDto> getList() {
+        return new ArrayList<>(employeeMapper.toListDto(employeeService.getHashMap()).values());
     }
 
     @ApiOperation("Удаление работника по id")

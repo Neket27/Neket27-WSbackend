@@ -43,8 +43,8 @@ public class EmployeeService {
         return employee;
     }
 
-    public HashMap<UUID, Employee> getList() {
-        return inMemoryEmployeeCard.getList();
+    public HashMap<UUID, Employee> getHashMap() {
+        return inMemoryEmployeeCard.getHashMap();
     }
 
     public void remove(UUID id) {
@@ -56,7 +56,7 @@ public class EmployeeService {
     }
 
     public void printSortedByFirstAndLastName() {
-        List<Employee> listEmployees = new ArrayList<>(inMemoryEmployeeCard.getList().values());
+        List<Employee> listEmployees = new ArrayList<>(inMemoryEmployeeCard.getHashMap().values());
         listEmployees.sort(comparatorInFirstNameAndLastName());
         listEmployees.forEach(employee -> {
             System.out.println(employee);

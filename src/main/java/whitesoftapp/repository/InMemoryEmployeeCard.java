@@ -41,7 +41,7 @@ public class InMemoryEmployeeCard {
         this.employees.put(id, employee);
     }
 
-    public HashMap<UUID, Employee> getList() {
+    public HashMap<UUID, Employee> getHashMap() {
         return employees;
     }
 

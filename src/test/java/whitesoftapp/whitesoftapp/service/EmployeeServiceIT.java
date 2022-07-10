@@ -120,7 +120,7 @@ class EmployeeServiceIT {
 
         //Act
         employeeService.create(createEmployeeArgument);
-        Optional<UUID> pk = inMemoryEmployeeCard.getList().keySet().stream().findFirst();
+        Optional<UUID> pk = inMemoryEmployeeCard.getHashMap().keySet().stream().findFirst();
         employeeExpected.setId(pk.get());
         Employee actual = inMemoryEmployeeCard.get(pk.get());
 
@@ -154,13 +154,13 @@ class EmployeeServiceIT {
     @Test
     void getList() {
         //Arrange
-        inMemoryEmployeeCard.getList().clear();
+        inMemoryEmployeeCard.getHashMap().clear();
         inMemoryEmployeeCard.put(employeeExpected.getId(), employeeExpected);
         HashMap storage = new HashMap();
         storage.put(employeeExpected.getId(), employeeExpected);
 
         //Act
-        HashMap<UUID, Employee> employeesResult = employeeService.getList();
+        HashMap<UUID, Employee> employeesResult = employeeService.getHashMap();
 
         //Assert
         Assertions.assertEquals(employeesResult, storage);

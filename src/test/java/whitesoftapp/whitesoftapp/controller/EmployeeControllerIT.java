@@ -20,9 +20,7 @@ import whitesoftapp.repository.InMemoryPost;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -138,21 +136,21 @@ class EmployeeControllerIT {
     @Test
     void getList() {
         //Arrange
-        inMemoryEmployeeCard.getList().clear();
+        inMemoryEmployeeCard.getHashMap().clear();
         inMemoryEmployeeCard.put(id, employeeExpected);
 
         //Act
-        HashMap resultEmployee = webClient.get()
+        List resultEmployee = webClient.get()
                 .uri("/employees/list")
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody(HashMap.class)
+                .expectBody(List.class)
                 .returnResult()
                 .getResponseBody();
 
-        HashMap<UUID, Employee> listEmployee = new HashMap<>();
-        listEmployee.put(id, employeeExpected);
+        List<EmployeeDto> listEmployee = new ArrayList<>();
+        listEmployee.add(expectedEmployeeDto);
 
         //Assert
         Assertions.assertNotEquals(resultEmployee, listEmployee);
