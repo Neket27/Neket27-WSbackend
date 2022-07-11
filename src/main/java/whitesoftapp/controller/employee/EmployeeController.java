@@ -3,8 +3,6 @@ package whitesoftapp.controller.employee;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import whitesoftapp.action.CreateEmployeeArgumentAction;
-import whitesoftapp.action.UpdateEmployeeArgumentAction;
 import whitesoftapp.arguments.CreateEmployeeArgument;
 import whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.controller.utils.mapper.employee.EmployeeMapper;
@@ -24,14 +22,12 @@ import java.util.UUID;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private final CreateEmployeeArgumentAction createEmployeeArgumentAction;
-    private final UpdateEmployeeArgumentAction updateEmployeeArgumentAction;
     private final EmployeeMapper employeeMapper;
 
     @ApiOperation("Создание нового работника")
     @PostMapping("/create")
     public EmployeeDto create(@Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
-        CreateEmployeeArgument createEmployeeArgument = createEmployeeArgumentAction.create(createEmployeeDto);
+        CreateEmployeeArgument createEmployeeArgument = employeeMapper.toArgumentFromCreateEmployeeDto(createEmployeeDto);
 
         return employeeMapper.toDto(employeeService.create(createEmployeeArgument));
     }
@@ -39,7 +35,7 @@ public class EmployeeController {
     @ApiOperation("Обновление информации сотрудника")
     @PostMapping(value = "/update/{id}")
     public EmployeeDto update(@PathVariable UUID id, @RequestBody UpdateEmployeeDto updateEmployeeDto) {
-        UpdateEmployeeArgument updateEmployeeArgumen=updateEmployeeArgumentAction.update(updateEmployeeDto);
+        UpdateEmployeeArgument updateEmployeeArgumen=employeeMapper.toArgumentFromUpdateEmployeeDto(updateEmployeeDto);
         return employeeMapper.toDto(employeeService.update(id,updateEmployeeArgumen));
     }
 
@@ -53,7 +49,7 @@ public class EmployeeController {
     @ApiOperation("Вывод списка сотрудников")
     @GetMapping("/list")
     public List<EmployeeDto> getList() {
-        return new ArrayList<>(employeeMapper.toListDto(employeeService.getHashMap()).values());
+        return new ArrayList<>(employeeMapper.toListDto(employeeService.getMap()).values());
     }
 
     @ApiOperation("Удаление работника по id")

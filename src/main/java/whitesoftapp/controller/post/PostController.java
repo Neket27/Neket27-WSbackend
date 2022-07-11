@@ -2,7 +2,7 @@ package whitesoftapp.controller.post;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import whitesoftapp.action.CreatePostArgumentAction;
+import whitesoftapp.arguments.CreatePostArgument;
 import whitesoftapp.controller.utils.mapper.post.PostMapper;
 import whitesoftapp.model.dtos.post.CreatePostDto;
 import whitesoftapp.model.dtos.post.PostDto;
@@ -17,12 +17,12 @@ import java.util.UUID;
 public class PostController {
 
     private final PostService postService;
-    private final CreatePostArgumentAction createPostArgumentAction;
     private final PostMapper postMapper;
 
     @PostMapping("/create")
     public PostDto createPost(@Valid @RequestBody CreatePostDto createPostDto) {
-        return postMapper.toDto(postService.create(createPostArgumentAction.create(createPostDto)));
+        CreatePostArgument createPostArgument=postMapper.convertToCreatePostArgument(createPostDto);
+        return postMapper.toDto(postService.create(createPostArgument));
     }
 
     @GetMapping("/{id}")

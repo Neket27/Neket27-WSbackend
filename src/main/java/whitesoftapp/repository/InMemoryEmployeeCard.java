@@ -10,7 +10,7 @@ import java.util.*;
 @Repository
 public class InMemoryEmployeeCard {
 
-    private final HashMap<UUID, Employee> employees;
+    private final Map<UUID, Employee> employees;
 
     public Employee get(UUID id) {
         return employees.get(id);
@@ -41,7 +41,7 @@ public class InMemoryEmployeeCard {
         this.employees.put(id, employee);
     }
 
-    public HashMap<UUID, Employee> getHashMap() {
+    public Map<UUID, Employee> getMap() {
         return employees;
     }
 

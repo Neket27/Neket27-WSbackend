@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import whitesoftapp.arguments.CreateEmployeeArgument;
 import whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.controller.utils.mapper.employee.EmployeeMapper;
-import whitesoftapp.exception.employee.ErrorEmployee;
+import whitesoftapp.exception.ErrorException;
 import whitesoftapp.model.Employee;
 import whitesoftapp.model.Post;
 import whitesoftapp.repository.InMemoryEmployeeCard;
@@ -38,13 +38,13 @@ public class EmployeeService {
       public Employee getById(UUID id) {
         Employee employee = inMemoryEmployeeCard.get(id);
         if (employee == null)
-            throw new ErrorEmployee("Нет Работника с таким id");
+            throw new ErrorException("Нет Работника с таким id");
 
         return employee;
     }
 
-    public HashMap<UUID, Employee> getHashMap() {
-        return inMemoryEmployeeCard.getHashMap();
+    public Map<UUID, Employee> getMap() {
+        return inMemoryEmployeeCard.getMap();
     }
 
     public void remove(UUID id) {
@@ -56,7 +56,7 @@ public class EmployeeService {
     }
 
     public void printSortedByFirstAndLastName() {
-        List<Employee> listEmployees = new ArrayList<>(inMemoryEmployeeCard.getHashMap().values());
+        List<Employee> listEmployees = new ArrayList<>(inMemoryEmployeeCard.getMap().values());
         listEmployees.sort(comparatorInFirstNameAndLastName());
         listEmployees.forEach(employee -> {
             System.out.println(employee);

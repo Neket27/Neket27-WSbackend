@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import whitesoftapp.arguments.CreatePostArgument;
 import whitesoftapp.controller.utils.mapper.post.PostMapper;
-import whitesoftapp.exception.post.ErrorPost;
+import whitesoftapp.exception.ErrorException;
 import whitesoftapp.model.Post;
 import whitesoftapp.repository.InMemoryPost;
 
@@ -26,7 +26,7 @@ public class PostService {
     public Post getById(UUID id){
         Post post = inMemoryPost.get(id);
         if (post == null)
-            throw new ErrorPost("Нет Поста с таким id");
+            throw new ErrorException("Нет Поста с таким id");
 
         return post;
     }

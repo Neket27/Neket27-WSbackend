@@ -9,8 +9,6 @@ import java.util.UUID;
 
 @Data
 public class CreateContactsDto {
-
-    private UUID id;
     @Pattern(regexp = "(^$|\\d{10})")
     private String phone;
     @Email

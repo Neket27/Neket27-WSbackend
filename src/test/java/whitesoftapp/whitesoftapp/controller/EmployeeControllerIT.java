@@ -136,7 +136,7 @@ class EmployeeControllerIT {
     @Test
     void getList() {
         //Arrange
-        inMemoryEmployeeCard.getHashMap().clear();
+        inMemoryEmployeeCard.getMap().clear();
         inMemoryEmployeeCard.put(id, employeeExpected);
 
         //Act

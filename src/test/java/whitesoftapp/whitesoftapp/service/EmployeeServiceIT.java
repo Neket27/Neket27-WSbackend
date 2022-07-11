@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
-import whitesoftapp.action.CreateEmployeeArgumentAction;
 import whitesoftapp.arguments.CreateEmployeeArgument;
 import whitesoftapp.arguments.UpdateEmployeeArgument;
 import whitesoftapp.model.Contacts;
@@ -19,11 +18,7 @@ import whitesoftapp.model.dtos.post.PostDto;
 import whitesoftapp.repository.InMemoryEmployeeCard;
 import whitesoftapp.service.employee.EmployeeService;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.UUID;
-
+import java.util.*;
 
 
 @SpringBootTest
@@ -33,8 +28,6 @@ class EmployeeServiceIT {
     private EmployeeService employeeService;
     @Autowired
     private InMemoryEmployeeCard inMemoryEmployeeCard;
-    @Autowired
-    private CreateEmployeeArgumentAction createEmployeeArgumentAction;
 
     Post post = new Post(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "newPost");
     PostDto postDto = new PostDto(UUID.fromString("854ef89d-6c27-4635-926d-894d76a81707"), "newPost");
@@ -120,7 +113,7 @@ class EmployeeServiceIT {
 
         //Act
         employeeService.create(createEmployeeArgument);
-        Optional<UUID> pk = inMemoryEmployeeCard.getHashMap().keySet().stream().findFirst();
+        Optional<UUID> pk = inMemoryEmployeeCard.getMap().keySet().stream().findFirst();
         employeeExpected.setId(pk.get());
         Employee actual = inMemoryEmployeeCard.get(pk.get());
 
@@ -154,13 +147,13 @@ class EmployeeServiceIT {
     @Test
     void getList() {
         //Arrange
-        inMemoryEmployeeCard.getHashMap().clear();
+        inMemoryEmployeeCard.getMap().clear();
         inMemoryEmployeeCard.put(employeeExpected.getId(), employeeExpected);
         HashMap storage = new HashMap();
         storage.put(employeeExpected.getId(), employeeExpected);
 
         //Act
-        HashMap<UUID, Employee> employeesResult = employeeService.getHashMap();
+        Map<UUID, Employee> employeesResult = employeeService.getMap();
 
         //Assert
         Assertions.assertEquals(employeesResult, storage);

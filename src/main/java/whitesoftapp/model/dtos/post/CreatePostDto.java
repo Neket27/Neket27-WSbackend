@@ -12,10 +12,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatePostDto {
-
     @NotNull(message = "Post id = null")
     private UUID id;
-
     @NotBlank(message = "Post name is mandatory")
     private String name;
 

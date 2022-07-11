@@ -38,7 +38,7 @@ class ReadInfoAboutEmployeesJsonIT {
         listEmployees.forEach(employee ->inMemoryEmployeeCard.add(employee));
 
         //Assert
-        assertThat(inMemoryEmployeeCard.getHashMap()).isEqualTo(storage);
+        assertThat(inMemoryEmployeeCard.getMap()).isEqualTo(storage);
     }
 
 

@@ -26,9 +26,9 @@ public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
     private final ParsInfoEmployeeFromTxt parsInfoEmployeeFromTxt;
 
     @Override
-    public List<String> readEmployeesFromFile(String PATH) throws Exception {
+    public List<String> readEmployeesFromFile(String path) throws Exception {
         List<String> listEmployeesInfo = new ArrayList<>();
-        listEmployeesInfo.addAll(Files.lines(Paths.get(PATH)).collect(Collectors.toList()));
+        listEmployeesInfo.addAll(Files.lines(Paths.get(path)).collect(Collectors.toList()));
 
         if (listEmployeesInfo.isEmpty()) {
             throw new Exception("The file is empty");
