@@ -1,7 +1,6 @@
 package whitesoftapp.controller.utils.mapper.post;
 
 import org.mapstruct.Mapper;
-import whitesoftapp.arguments.CreateEmployeeArgument;
 import whitesoftapp.arguments.CreatePostArgument;
 import whitesoftapp.model.Post;
 import whitesoftapp.model.dtos.post.CreatePostDto;

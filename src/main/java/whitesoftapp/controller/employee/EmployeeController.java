@@ -11,8 +11,8 @@ import whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 import whitesoftapp.service.employee.EmployeeService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,28 +28,26 @@ public class EmployeeController {
     @PostMapping("/create")
     public EmployeeDto create(@Valid @RequestBody CreateEmployeeDto createEmployeeDto) {
         CreateEmployeeArgument createEmployeeArgument = employeeMapper.toArgumentFromCreateEmployeeDto(createEmployeeDto);
-
         return employeeMapper.toDto(employeeService.create(createEmployeeArgument));
     }
 
     @ApiOperation("Обновление информации сотрудника")
     @PostMapping(value = "/update/{id}")
-    public EmployeeDto update(@PathVariable UUID id, @RequestBody UpdateEmployeeDto updateEmployeeDto) {
-        UpdateEmployeeArgument updateEmployeeArgumen=employeeMapper.toArgumentFromUpdateEmployeeDto(updateEmployeeDto);
-        return employeeMapper.toDto(employeeService.update(id,updateEmployeeArgumen));
+    public EmployeeDto update(@PathVariable UUID id, @RequestBody UpdateEmployeeDto updateEmployeeDto, HttpServletRequest request) {
+        UpdateEmployeeArgument updateEmployeeArgument = employeeMapper.toArgumentFromUpdateEmployeeDto(updateEmployeeDto);
+        return employeeMapper.toDto(employeeService.update(id, updateEmployeeArgument));
     }
 
     @ApiOperation("Получение сотрудника по id")
     @GetMapping("/{id}")
-    public EmployeeDto getById(@PathVariable UUID id)  {
-
+    public EmployeeDto getById(@PathVariable UUID id) {
         return employeeMapper.toDto(employeeService.getById(id));
     }
 
     @ApiOperation("Вывод списка сотрудников")
     @GetMapping("/list")
     public List<EmployeeDto> getList() {
-        return new ArrayList<>(employeeMapper.toListDto(employeeService.getMap()).values());
+        return employeeMapper.toListDto(employeeService.getList());
     }
 
     @ApiOperation("Удаление работника по id")

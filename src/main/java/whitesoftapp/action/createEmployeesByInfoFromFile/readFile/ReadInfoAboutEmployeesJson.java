@@ -1,4 +1,4 @@
-package whitesoftapp.action.createEmployeesByInfoFromFile;
+package whitesoftapp.action.createEmployeesByInfoFromFile.readFile;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,13 +6,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 import whitesoftapp.controller.employee.EmployeeController;
 import whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 
-import javax.validation.Valid;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;

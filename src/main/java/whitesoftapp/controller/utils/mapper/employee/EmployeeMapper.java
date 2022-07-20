@@ -8,8 +8,8 @@ import whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
+
 
 @Mapper(componentModel = "spring")
 public interface EmployeeMapper {
@@ -26,7 +26,7 @@ public interface EmployeeMapper {
 
     UpdateEmployeeArgument toArgumentFromUpdateEmployeeDto(UpdateEmployeeDto updateEmployeeDto);
 
-    Map<UUID, EmployeeDto> toListDto(Map<UUID,Employee> hashMap);
+    List<EmployeeDto> toListDto(List<Employee> list);
 
 }
 

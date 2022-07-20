@@ -1,6 +1,6 @@
 package whitesoftapp.exception;
 
-public class ErrorException extends RuntimeException{
+public class ErrorException extends RuntimeException {
 
     public ErrorException(String message) {
         super(message);

@@ -1,10 +1,10 @@
 package whitesoftapp.model.dtos.employee;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import whitesoftapp.model.JobType;
 import whitesoftapp.model.dtos.contacts.ContactsDto;
 import whitesoftapp.model.dtos.post.PostDto;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class UpdateEmployeeDto {
-
+    @Id
     private UUID id;
     @NotBlank
     private String firstName;

@@ -1,13 +1,12 @@
-package whitesoftapp.action.createEmployeesByInfoFromFile;
+package whitesoftapp.action.createEmployeesByInfoFromFile.readFile;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import whitesoftapp.action.createEmployeesByInfoFromFile.parser.ParsInfoEmployeeFromTxt;
+import whitesoftapp.action.createEmployeesByInfoFromFile.readFile.parser.ParsInfoEmployeeFromTxt;
 import whitesoftapp.controller.employee.EmployeeController;
 import whitesoftapp.controller.post.PostController;
 import whitesoftapp.model.dtos.employee.CreateEmployeeDto;
-import whitesoftapp.repository.InMemoryEmployeeCard;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 @Component
 public class ReadInfoAboutEmployeesTxt implements ReadEmployeesByInfoFromFile {
 
-    private final InMemoryEmployeeCard inMemoryEmployeeCard;
     private final PostController postController;
     private final EmployeeController employeeController;
     private final ParsInfoEmployeeFromTxt parsInfoEmployeeFromTxt;

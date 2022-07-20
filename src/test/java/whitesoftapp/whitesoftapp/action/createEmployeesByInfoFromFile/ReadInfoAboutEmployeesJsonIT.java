@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import whitesoftapp.controller.utils.mapper.employee.EmployeeMapper;
 import whitesoftapp.model.Employee;
-import whitesoftapp.repository.InMemoryEmployeeCard;
+import whitesoftapp.repository.EmployeeRepository;
 
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +24,7 @@ class ReadInfoAboutEmployeesJsonIT {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    InMemoryEmployeeCard inMemoryEmployeeCard;
+    EmployeeRepository employeeRepository;
     @Autowired
     EmployeeMapper employeeMapper;
 
@@ -32,13 +33,11 @@ class ReadInfoAboutEmployeesJsonIT {
         //Arrange
         List<Employee> listEmployees = objectMapper.readValue(new File("src/main/resources/Employee.json"), new TypeReference<List<Employee>>() {});
 
-        HashMap storage = new HashMap();
-        listEmployees.forEach(e->storage.put(e.getId(),e));
         //Act
-        listEmployees.forEach(employee ->inMemoryEmployeeCard.add(employee));
+        employeeRepository.saveAll(listEmployees);
 
         //Assert
-        assertThat(inMemoryEmployeeCard.getMap()).isEqualTo(storage);
+        assertThat(employeeRepository.findAll()).isEqualTo(listEmployees);
     }
 
 

@@ -37,7 +37,6 @@ public class Employee {
     private List<String> characteristics;
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
     @ApiModelProperty("Должность сотрудника")
     @NotNull(message = "Post is mandatory")
     private Post post;

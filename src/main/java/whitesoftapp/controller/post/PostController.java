@@ -21,7 +21,7 @@ public class PostController {
 
     @PostMapping("/create")
     public PostDto createPost(@Valid @RequestBody CreatePostDto createPostDto) {
-        CreatePostArgument createPostArgument=postMapper.convertToCreatePostArgument(createPostDto);
+        CreatePostArgument createPostArgument = postMapper.convertToCreatePostArgument(createPostDto);
         return postMapper.toDto(postService.create(createPostArgument));
     }
 

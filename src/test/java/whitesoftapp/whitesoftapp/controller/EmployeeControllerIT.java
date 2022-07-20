@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import whitesoftapp.controller.employee.EmployeeController;
 import whitesoftapp.model.Employee;
@@ -15,12 +16,17 @@ import whitesoftapp.model.dtos.employee.CreateEmployeeDto;
 import whitesoftapp.model.dtos.employee.EmployeeDto;
 import whitesoftapp.model.dtos.employee.UpdateEmployeeDto;
 import whitesoftapp.model.dtos.post.PostDto;
-import whitesoftapp.repository.InMemoryEmployeeCard;
-import whitesoftapp.repository.InMemoryPost;
+import whitesoftapp.repository.EmployeeRepository;
+import whitesoftapp.repository.PostRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @AutoConfigureWebTestClient
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -31,46 +37,47 @@ class EmployeeControllerIT {
     @Autowired
     private EmployeeController employeeController;
     @Autowired
-    private InMemoryEmployeeCard inMemoryEmployeeCard;
+    private EmployeeRepository employeeRepository;
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    InMemoryPost inMemoryPost;
+    private PostRepository postRepository;
 
-    UUID id = UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6");
 
     private Employee employeeExpected;
     private EmployeeDto expectedEmployeeDto;
     private CreateEmployeeDto createEmployeeDto;
     private UpdateEmployeeDto updateEmployeeDto;
 
+    UUID id;
+
     @BeforeEach
     private void setData() throws IOException {
 
-        createEmployeeDto = date("CreateEmployeeDto.json", CreateEmployeeDto.class);
-        employeeExpected = date("Employee.json", Employee.class);
-        expectedEmployeeDto = date("Employee.json", EmployeeDto.class);
-        expectedEmployeeDto = date("Employee.json", EmployeeDto.class);
-        updateEmployeeDto = date("Employee.json", UpdateEmployeeDto.class);
+        createEmployeeDto = data("CreateEmployeeDto.json", CreateEmployeeDto.class);
+        employeeExpected = data("Employee.json", Employee.class);
+        expectedEmployeeDto = data("Employee.json", EmployeeDto.class);
+        expectedEmployeeDto = data("Employee.json", EmployeeDto.class);
+        updateEmployeeDto = data("Employee.json", UpdateEmployeeDto.class);
 
         employeeExpected.setPost(new Post(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
         expectedEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
         updateEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
-        inMemoryEmployeeCard.put(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), employeeExpected);
+        employeeRepository.deleteAll();
+        employeeRepository.save(employeeExpected);
+        id=employeeRepository.findAll().get(0).getId();
+        updateEmployeeDto.setId(id);
     }
 
-    private <T> T date(String file, Class<T> fileClass) throws IOException {
-        return objectMapper.readValue(new File(Objects.requireNonNull(EmployeeControllerIT.class
-                                .getClassLoader()
-                                .getResource(file))
-                        .getFile()),
-                fileClass);
+    private <T> T data(String file, Class<T> fileClass) throws IOException {
+        File resource = new ClassPathResource(file).getFile();
+        return objectMapper.readValue(new String(Files.readAllBytes(resource.toPath())),fileClass);
     }
 
     @Test
-    void create() {
+    void create() throws IOException {
         //Arrange
-        inMemoryPost.create(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string");
+        postRepository.save(new Post(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
 
         //Act
         EmployeeDto actual = webClient.post()
@@ -84,14 +91,13 @@ class EmployeeControllerIT {
                 .getResponseBody();
 
         //Assert
-        Assertions.assertEquals(actual.getFirstName(), expectedEmployeeDto.getFirstName());
-        Assertions.assertEquals(actual.getLastName(), expectedEmployeeDto.getLastName());
-        Assertions.assertEquals(actual.getDescription(), actual.getDescription());
-        Assertions.assertEquals(actual.getCharacteristics(), expectedEmployeeDto.getCharacteristics());
-        Assertions.assertEquals(actual.getPost(), expectedEmployeeDto.getPost());
-        Assertions.assertEquals(actual.getContacts(), expectedEmployeeDto.getContacts());
-        Assertions.assertEquals(actual.getJobType(), expectedEmployeeDto.getJobType());
-
+        assertEquals(actual.getFirstName(), expectedEmployeeDto.getFirstName());
+        assertEquals(actual.getLastName(), expectedEmployeeDto.getLastName());
+        assertEquals(actual.getDescription(), actual.getDescription());
+        assertEquals(actual.getCharacteristics(), expectedEmployeeDto.getCharacteristics());
+        assertEquals(actual.getPost(), expectedEmployeeDto.getPost());
+        assertEquals(actual.getContacts(), expectedEmployeeDto.getContacts());
+        assertEquals(actual.getJobType(), expectedEmployeeDto.getJobType());
     }
 
     @Test
@@ -108,20 +114,24 @@ class EmployeeControllerIT {
                 .getResponseBody();
 
         //Assert
-        Assertions.assertEquals(actual.getFirstName(), expectedEmployeeDto.getFirstName());
-        Assertions.assertEquals(actual.getLastName(), expectedEmployeeDto.getLastName());
-        Assertions.assertEquals(actual.getDescription(), actual.getDescription());
-        Assertions.assertEquals(actual.getCharacteristics(), expectedEmployeeDto.getCharacteristics());
-        Assertions.assertEquals(actual.getPost(), expectedEmployeeDto.getPost());
-        Assertions.assertEquals(actual.getContacts(), expectedEmployeeDto.getContacts());
-        Assertions.assertEquals(actual.getJobType(), expectedEmployeeDto.getJobType());
+        assertEquals(actual.getFirstName(), expectedEmployeeDto.getFirstName());
+        assertEquals(actual.getLastName(), expectedEmployeeDto.getLastName());
+        assertEquals(actual.getDescription(), actual.getDescription());
+        assertEquals(actual.getCharacteristics(), expectedEmployeeDto.getCharacteristics());
+        assertEquals(actual.getPost(), expectedEmployeeDto.getPost());
+        assertEquals(actual.getContacts(), expectedEmployeeDto.getContacts());
+        assertEquals(actual.getJobType(), expectedEmployeeDto.getJobType());
 
     }
 
     @Test
     void getById() {
         //Act
-        EmployeeDto result = webClient.get().uri("/employees/{id}", id)
+        employeeRepository.save(employeeExpected);
+        UUID pk=employeeRepository.findAll().get(0).getId();
+        expectedEmployeeDto.setId(pk);
+
+        EmployeeDto actual = webClient.get().uri("/employees/{id}", pk)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -130,14 +140,13 @@ class EmployeeControllerIT {
                 .getResponseBody();
 
         //Assert
-        Assertions.assertEquals(result, expectedEmployeeDto);
+        assertEquals(actual, expectedEmployeeDto);
     }
 
     @Test
     void getList() {
         //Arrange
-        inMemoryEmployeeCard.getMap().clear();
-        inMemoryEmployeeCard.put(id, employeeExpected);
+        employeeRepository.save(employeeExpected);
 
         //Act
         List resultEmployee = webClient.get()
@@ -159,18 +168,18 @@ class EmployeeControllerIT {
     @Test
     void remove() {
         //Arrange
-        inMemoryEmployeeCard.add(employeeExpected);
-
+        employeeRepository.save(employeeExpected);
+        Employee employee=employeeRepository.findAll().get(0);
+        UUID pk = employeeRepository.findAll().get(0).getId();
         //Act
-        webClient.get().uri("employees/remove/{id}", id)
+        webClient.get().uri("employees/remove/{id}", pk)
                 .exchange()
                 .expectStatus()
-                .isOk();
-
-        Employee result = inMemoryEmployeeCard.get(id);
-
-        //Assert
-        Assertions.assertNull(result);
+                .isOk()
+                .expectBody()
+                .returnResult()
+                 //Assert
+                .equals(null);
     }
 
 }

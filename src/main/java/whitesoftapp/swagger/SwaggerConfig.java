@@ -1,4 +1,5 @@
 package whitesoftapp.swagger;
+
 import com.google.common.collect.Sets;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Configuration
