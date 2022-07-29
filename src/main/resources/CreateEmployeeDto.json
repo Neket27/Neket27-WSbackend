@@ -1,0 +1,15 @@
+{
+  "characteristics": [
+    "string"
+  ],
+  "contacts": {
+    "email": "string",
+    "phone": "string",
+    "workEmail": "string"
+  },
+  "description": "string",
+  "firstName": "string",
+  "jobType": "CONTRACT",
+  "lastName": "string",
+  "postId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+}
