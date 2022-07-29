@@ -2,47 +2,22 @@ package whitesoftapp.logging;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import whitesoftapp.model.Employee;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
 @Aspect
 @Component
-public class LoggingEmployee {
+public class LoggingUpdateEmployee {
 
-    @Pointcut("execution(public * whitesoftapp.controller.employee.EmployeeController.*(..))")
-    private void callAtEmployeeController() { }
-
-    @Pointcut("execution(public * whitesoftapp.action.updateDataEmployee.UpdateData.*(..))")
+    @Pointcut("execution(public * whitesoftapp.service.employee.EmployeeService.update())")
     private void callUpdateFields(){}
-
-    @Before("callAtEmployeeController()")
-    private void logParams(JoinPoint jp) {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        List<String> args = Arrays.stream(jp.getArgs())
-                                  .map(a -> a.toString())
-                                  .collect(Collectors.toList());
-
-        log.info("Class request: {}",jp.getSignature().getDeclaringTypeName());
-        log.info("Request {} {}",jp.getSignature().getName(),"with params:");
-        log.info("Id: {}", (args.size()!=0 ) ? args.get(0) : null);
-        log.info("Request IP: {}", request.getRemoteAddr());
-    }
-
-    @AfterThrowing(pointcut = "callAtEmployeeController()", throwing = "e")
-    private void logException(JoinPoint jp, Throwable e) {
-        log.error("Exception in {}.{}() with message = {}", jp.getSignature().getDeclaringTypeName(),
-                  jp.getSignature().getName(), e.getMessage() != null ? e.getMessage() : "NULL");
-    }
 
     @Before("callUpdateFields()")
     private void logUpdatedFields(JoinPoint joinPoint){

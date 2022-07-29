@@ -30,7 +30,7 @@ public class UpdateEmployeeDto {
     @NotNull
     private List<String> characteristics;
     @NotNull
-    private PostDto post;
+    private UUID postId;
     @NotNull
     private ContactsDto contacts;
     @NotNull

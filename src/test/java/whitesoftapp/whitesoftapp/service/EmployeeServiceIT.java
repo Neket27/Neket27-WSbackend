@@ -99,7 +99,7 @@ class EmployeeServiceIT {
                                                                   .lastName(employeeExpected.getLastName())
                                                                   .description(employeeExpected.getDescription())
                                                                   .characteristics(employeeExpected.getCharacteristics())
-                                                                  .post(postDto)
+                                                                  .postId(employeeExpected.getPost().getId())
                                                                   .contacts(contactsDto)
                                                                   .jobType(employeeExpected.getJobType())
                                                                   .build();

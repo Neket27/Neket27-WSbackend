@@ -62,7 +62,7 @@ class EmployeeControllerIT {
 
         employeeExpected.setPost(new Post(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
         expectedEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
-        updateEmployeeDto.setPost(new PostDto(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
+        updateEmployeeDto.setPostId(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"));
         employeeRepository.deleteAll();
         employeeRepository.save(employeeExpected);
         id=employeeRepository.findAll().get(0).getId();
@@ -75,7 +75,7 @@ class EmployeeControllerIT {
     }
 
     @Test
-    void create() throws IOException {
+    void create() {
         //Arrange
         postRepository.save(new Post(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"), "string"));
 

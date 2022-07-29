@@ -32,8 +32,8 @@ public class UpdateEmployeeArgument {
     @NotNull(message = "Characteristics are mandatory")
     private List<String> characteristics;
 
-    @NotNull(message = "Post is mandatory")
-    private PostDto post;
+    @NotNull(message = "PostId is mandatory")
+    private UUID postId;
 
     @NotNull(message = "Contacts are mandatory")
     private ContactsDto contacts;
